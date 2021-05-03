@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../appbar.dart';
-import 'notices.dart';
+import 'notice.dart';
+import 'routine.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,7 +14,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: appbar(),
       body: Column(
-        children: [noticeBlock()],
+        children: [
+          noticeBlock(),
+          Divider(
+            color: Color(0xff126e82),
+            indent: 60,
+            endIndent: 60,
+            thickness: 2,
+          ),
+          routineBlock(),
+        ],
       ),
     );
   }
