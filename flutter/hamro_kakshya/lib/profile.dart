@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(Profile());
+}
+
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
@@ -9,107 +13,62 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[00],
-      appBar: AppBar(
-        title: Text("Aron Shrestha \n CE-2018"),
-        // actions: [
-        //   IconButton(
-        //     icon: Image.asset('assets/aron.jpg'),
-        //     onPressed: () {},
-        //   )
-        // ],
-        leading: GestureDetector(
-            onTap: () {},
-            child: IconButton(
-              icon: Image.asset('assets/aron.jpg'),
-              onPressed: () {},
-            )),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: IconButton(
-              icon: Image.asset('assets/logout.jpg'),
-              onPressed: () {},
-            ),
-          )
-        ],
-      ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(280, 0, 280, 0),
+        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(height: 40),
             Container(
-              height: 250,
-              padding: EdgeInsets.all(20),
+              height: 200,
+              padding: EdgeInsets.all(5),
               child: Row(
                 children: [
-                  SizedBox(width: 40),
+                  SizedBox(width: 10),
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/aron.jpg'),
-                    radius: 50,
+                    backgroundImage: AssetImage('assets/images/user.png'),
+                    radius: 30
                   ),
-                  SizedBox(width: 80),
+                  SizedBox(width: 20),
                   Divider(
-                    height: 1,
+                    height: 10,
                     color: Colors.black,
                   ),
                   Text(
-                    " Name : Aron Shrestha \n\n ID : as0024518 \n\n Roll no : 42 \n\n Batch : 2018 \n\n Group : CSE \n\n Role : Student",
+                    " Name : John Doe \n ID : as0024518 \n Roll no : 42 \n Batch : 2018 \n Group : CSE \n Role : Student",
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Divider(
-                    height: 200,
-                    color: Colors.grey[700],
+                    height: 5,
+                    color: Colors.blue,
                   ),
                 ],
               ),
-              color: Colors.blueGrey[200],
+              color: Color(0xffe1f6f7),
             ),
             Divider(
-              height: 2,
+              height: 5, 
               color: Colors.grey[700],
             ),
-            SizedBox(height: 40),
             Container(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                "Personal Secource Section ",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              padding: EdgeInsets.all(5),
+              child: new Center( 
+                child: Text(
+                  "Personal Recource Section ",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               height: 250,
-              color: Colors.blueGrey[200],
+              color: Color(0xffe1f6f7),
             ),
             Divider(
-              height: 2,
+              height: 5,
               color: Colors.grey[700],
-            ),
-            SizedBox(height: 30),
-            Container(
-              padding: EdgeInsets.all(20),
-              color: Colors.blueGrey[200],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(icon: const Icon(Icons.home), onPressed: () {}),
-                  SizedBox(width: 30),
-                  IconButton(icon: const Icon(Icons.home), onPressed: () {}),
-                  SizedBox(width: 30),
-                  IconButton(icon: const Icon(Icons.home), onPressed: () {}),
-                  SizedBox(width: 30),
-                  IconButton(icon: const Icon(Icons.home), onPressed: () {}),
-                  SizedBox(width: 30),
-                  IconButton(icon: const Icon(Icons.home), onPressed: () {}),
-                ],
-              ),
             ),
           ],
         ),

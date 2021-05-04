@@ -24,17 +24,13 @@ class _NoticeState extends State<Notice> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Hamroo Kakshyaa",
+      debugShowCheckedModeBanner: false,
       home: new Scaffold(
-          backgroundColor: const Color(0xFFF6F0F0),
-          appBar: new AppBar(
-            title: new Text('Notices', style: TextStyle(color: Colors.black)),
-            backgroundColor: const Color(0xFF51C4D3),
-          ),
           body: new ListView.builder(
               itemCount: notices.length,
               itemBuilder: (BuildContext contex, int index) {
                 return new Card(
-                    color: const Color(0xFFD8E3E7),
+                    color: Color(0xffe1f6f7),
                     margin:
                         EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
                     child: new ListTile(
