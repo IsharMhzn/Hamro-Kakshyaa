@@ -21,14 +21,14 @@ class _ProfileState extends State<Profile> {
         leading: GestureDetector(
             onTap: () {},
             child: IconButton(
-              icon: Image.asset('assets/aron.jpg'),
+              icon: Image.asset('assets/images/ishar.jpg'),
               onPressed: () {},
             )),
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: IconButton(
-              icon: Image.asset('assets/logout.jpg'),
+              icon: Image.asset('assets/images/ishar.jpg'),
               onPressed: () {},
             ),
           )
@@ -48,7 +48,7 @@ class _ProfileState extends State<Profile> {
                 children: [
                   SizedBox(width: 40),
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/aron.jpg'),
+                    backgroundImage: AssetImage('assets/images/ishar.jpg'),
                     radius: 50,
                   ),
                   SizedBox(width: 80),
