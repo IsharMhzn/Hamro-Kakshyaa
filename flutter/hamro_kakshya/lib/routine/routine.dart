@@ -35,10 +35,11 @@ class _RoutineSecState extends State<RoutineSec> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
+        child: ListView(
           children: [
             Text(
               'Class Routine',
+              textAlign: TextAlign.center,
               style: TextStyle(
                   color: Color(0xff126e82),
                   fontWeight: FontWeight.bold,
