@@ -13,6 +13,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[00],
       body: Padding(
         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
         child: Column(
@@ -26,9 +27,8 @@ class _ProfileState extends State<Profile> {
                 children: [
                   SizedBox(width: 10),
                   CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/user.png'),
-                    radius: 30
-                  ),
+                      backgroundImage: AssetImage('assets/images/user.png'),
+                      radius: 30),
                   SizedBox(width: 20),
                   Divider(
                     height: 10,
@@ -49,12 +49,12 @@ class _ProfileState extends State<Profile> {
               color: Color(0xffe1f6f7),
             ),
             Divider(
-              height: 5, 
+              height: 5,
               color: Colors.grey[700],
             ),
             Container(
               padding: EdgeInsets.all(5),
-              child: new Center( 
+              child: new Center(
                 child: Text(
                   "Personal Recource Section ",
                   style: TextStyle(

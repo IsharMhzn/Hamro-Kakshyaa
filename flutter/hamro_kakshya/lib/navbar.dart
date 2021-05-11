@@ -3,6 +3,7 @@ import 'appbar.dart';
 import 'homescreen/homescreen.dart';
 import 'notice.dart';
 import 'profile.dart';
+import 'routine/routine.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -15,12 +16,12 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-          length: 5, 
-          child: Scaffold(
-            appBar: appbar(),
-            bottomNavigationBar: new Material(
-              color: const Color(0xFF126E82),
-              child: TabBar(
+      length: 5,
+      child: Scaffold(
+          appBar: appbar(),
+          bottomNavigationBar: new Material(
+            color: const Color(0xFF126E82),
+            child: TabBar(
                 labelColor: const Color(0xFF51C4D3),
                 unselectedLabelColor: const Color(0xFFD8E3E7),
                 indicatorColor: const Color(0xFF51C4D3),
@@ -30,31 +31,21 @@ class NavBar extends StatelessWidget {
                   Tab(icon: Icon(Icons.book_outlined)),
                   Tab(icon: Icon(Icons.school)),
                   Tab(icon: Icon(Icons.person)),
-                ]
-              ),
-            ),
-            body: TabBarView(
-              children: [
-                HomeScreen(),
-                Notice(),
-                Center( child: Text(
-                  "Notes Page", 
-                  style: TextStyle(
-                    color: const Color(0xFF132C33),
-                    fontSize: 40),
-                    )
-                  ),
-                Center( child: Text(
-                  "Routine Page", 
-                  style: TextStyle(
-                    color: const Color(0xFF132C33),
-                    fontSize: 40),
-                    )
-                  ),
-                Profile(),
-            ],
-          )
+                ]),
           ),
-        );
+          body: TabBarView(
+            children: [
+              HomeScreen(),
+              Notice(),
+              Center(
+                  child: Text(
+                "Notes Page",
+                style: TextStyle(color: const Color(0xFF132C33), fontSize: 40),
+              )),
+              RoutineSec(),
+              Profile(),
+            ],
+          )),
+    );
   }
 }
