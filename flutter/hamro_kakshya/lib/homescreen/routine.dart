@@ -17,7 +17,7 @@ Widget routineCardGenerator(lecture) {
   return Card(
     color: Color(0xffe1f6f7),
     child: Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(5.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -27,22 +27,22 @@ Widget routineCardGenerator(lecture) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('Code: ${lecture.subj}',
-                  style: TextStyle(color: Colors.black, fontSize: 20)),
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
               Text('Time: ${lecture.t.hour}:${lecture.t.min}',
-                  style: TextStyle(color: Colors.black, fontSize: 20)),
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
             ],
           ),
           SizedBox(
-            height: 10,
+            height: 8,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text('${lecture.type} class',
-                  style: TextStyle(color: Colors.black, fontSize: 20)),
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
               Text('${lecture.place}',
-                  style: TextStyle(color: Colors.black, fontSize: 20)),
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
             ],
           )
         ],
@@ -84,11 +84,11 @@ Widget routineBlock() {
                 style: TextStyle(
                     color: Color(0xff126e82),
                     fontWeight: FontWeight.bold,
-                    fontSize: 30),
+                    fontSize: 20),
               )),
           Divider(
             color: Color(0xff51C4D3),
-            thickness: 3,
+            thickness: 2,
             indent: 100,
             endIndent: 100,
           ),

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 Widget appbar() {
   return AppBar(
-    title: Text("Aron Shrestha \n CE-2018"),
-    backgroundColor: Color(0xff51C4D3),
+    title: Text(
+      "John Doe \nCE-2018",
+      style: TextStyle(color: const Color(0xFF132C33)),
+      ),
+    backgroundColor: const Color(0xFF51C4D3),
     leading: GestureDetector(
         onTap: () {
           print('The profile icon is clicked.');
@@ -12,7 +15,7 @@ Widget appbar() {
           padding: EdgeInsets.fromLTRB(3, 3, 0, 3),
           child: CircleAvatar(
             radius: 2,
-            backgroundImage: AssetImage('assets/images/ishar.jpg'),
+            backgroundImage: AssetImage('assets/images/user.png'),
           ),
         )),
     actions: [
@@ -21,6 +24,8 @@ Widget appbar() {
         child: IconButton(
           icon: Icon(Icons.logout),
           onPressed: () {},
+          color: const Color(0xFF132C33),
+          hoverColor: const Color(0xFF126E82),
         ),
       )
     ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../appbar.dart';
+// import '../appbar.dart';
 import 'notice.dart';
 import 'routine.dart';
 
@@ -12,7 +12,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar(),
       body: Column(
         children: [
           noticeBlock(),

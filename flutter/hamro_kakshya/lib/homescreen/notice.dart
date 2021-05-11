@@ -25,7 +25,7 @@ Widget noticeCardGenerator(notice) {
           ),
           title: Text(
             notice.notice,
-            style: TextStyle(color: Colors.black, fontSize: 20),
+            style: TextStyle(color: Colors.black, fontSize: 16),
             textAlign: TextAlign.center,
           ),
         ),
@@ -36,7 +36,7 @@ Widget noticeCardGenerator(notice) {
 }
 
 Widget noticeBlock() {
-  List<LatestNotice> latest_notices = [
+  List<LatestNotice> latestNotices = [
     LatestNotice(
         notice: 'COMP 311 class on 29th April is canceled.', type: 'cancel'),
     LatestNotice(
@@ -59,16 +59,16 @@ Widget noticeBlock() {
               style: TextStyle(
                   color: Color(0xff126e82),
                   fontWeight: FontWeight.bold,
-                  fontSize: 30),
+                  fontSize: 20),
             )),
         Divider(
           color: Color(0xff51C4D3),
-          thickness: 3,
+          thickness: 2,
           indent: 100,
           endIndent: 100,
         ),
         Column(
-          children: latest_notices
+          children: latestNotices
               .map(
                 (notice) => noticeCardGenerator(notice),
               )
