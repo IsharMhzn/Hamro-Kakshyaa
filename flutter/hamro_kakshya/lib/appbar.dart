@@ -5,7 +5,7 @@ Widget appbar() {
     title: Text(
       "John Doe \nCE-2018",
       style: TextStyle(color: const Color(0xFF132C33)),
-      ),
+    ),
     backgroundColor: const Color(0xFF51C4D3),
     leading: GestureDetector(
         onTap: () {
