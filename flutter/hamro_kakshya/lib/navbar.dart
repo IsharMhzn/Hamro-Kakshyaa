@@ -3,7 +3,7 @@ import 'appbar.dart';
 import 'homescreen/homescreen.dart';
 import 'notice.dart';
 import 'profile.dart';
-import 'routine/routine.dart';
+import 'routine/routinepage.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -42,7 +42,7 @@ class NavBar extends StatelessWidget {
                 "Notes Page",
                 style: TextStyle(color: const Color(0xFF132C33), fontSize: 40),
               )),
-              RoutineSec(),
+              RoutinePage(),
               Profile(),
             ],
           )),
