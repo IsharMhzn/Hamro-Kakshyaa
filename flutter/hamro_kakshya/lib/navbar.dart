@@ -4,6 +4,8 @@ import 'homescreen/homescreen.dart';
 import 'notice.dart';
 import 'profile.dart';
 import 'routine/routinepage.dart';
+import 'note.dart';
+import 'routine/routine.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -18,7 +20,7 @@ class NavBar extends StatelessWidget {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-          appBar: appbar(),
+          appBar: MyAppBar(),
           bottomNavigationBar: new Material(
             color: const Color(0xFF126E82),
             child: TabBar(
@@ -37,11 +39,7 @@ class NavBar extends StatelessWidget {
             children: [
               HomeScreen(),
               Notice(),
-              Center(
-                  child: Text(
-                "Notes Page",
-                style: TextStyle(color: const Color(0xFF132C33), fontSize: 40),
-              )),
+              Note(),
               RoutinePage(),
               Profile(),
             ],

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../homescreen/routine.dart';
+import 'routinepage.dart';
+
+import 'Class.dart';
 
 List<Routine> lectures = [
   Routine(
@@ -33,31 +36,18 @@ class _RoutineSecState extends State<RoutineSec> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView(
-          children: [
-            Text(
-              'Class Routine',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: Color(0xff126e82),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30),
-            ),
-            Divider(
-              color: Color(0xff51C4D3),
-              thickness: 2,
-              indent: 20,
-              endIndent: 20,
-            ),
-            SingleChildScrollView(
-              child: _buildPanel(),
-            ),
-          ],
-        ),
-      ),
-    );
+        body: Column(
+      children: [
+        RoutinePage(),
+        ElevatedButton(
+          child: Text('Upcoming Class'),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => (UpcomingClass())));
+          },
+        )
+      ],
+    ));
   }
 
   Widget _buildPanel() {
@@ -129,4 +119,85 @@ List<Item> generateItems(int numberOfItems) {
     "Thursday",
     "Friday"
   ].map((day) => Item(headerValue: day, expandedValue: day)).toList();
+}
+
+class UpcomingClass extends StatefulWidget {
+  @override
+  _UpcomingClassState createState() => _UpcomingClassState();
+}
+
+double Time_to_double(time) =>
+    time.hour.toDouble() + (time.minute.toDouble() / 60);
+
+Widget upcomingClasses(classes) {
+  TimeOfDay now = TimeOfDay.now();
+  double doubleNowVal = Time_to_double(now);
+  double timeofclass = Time_to_double(classes.classtime);
+
+  print(doubleNowVal);
+  print(timeofclass);
+  if (doubleNowVal < timeofclass) {
+    return Card(
+        margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
+        color: Color(0xffe1f6f7),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(classes.subject),
+              subtitle: Text(classes.venue),
+              trailing: Text(classes.classtime.toString()),
+            )
+          ],
+        ));
+  } else {
+    return Card(
+        margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
+        color: Color(0xffe1f6f7),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text("empty"),
+            )
+          ],
+        ));
+  }
+}
+
+class _UpcomingClassState extends State<UpcomingClass> {
+  List<Class> classes = [
+    Class(
+        subject: 'COMP 208',
+        venue: 'Block 9 204',
+        classtime: TimeOfDay(hour: 12, minute: 0)),
+    Class(
+        subject: 'COMP 205',
+        venue: 'Block 9 304',
+        classtime: TimeOfDay(hour: 15, minute: 0)),
+    Class(
+        subject: 'COMP 215',
+        venue: 'Block 9 304',
+        classtime: TimeOfDay(hour: 9, minute: 0)),
+    Class(
+        subject: 'COMP 209',
+        venue: 'Block 9 304',
+        classtime: TimeOfDay(hour: 8, minute: 0)),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            backgroundColor: Colors.blue,
+            appBar: AppBar(actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Routine')),
+            ]),
+            body: Column(
+              children: classes.map((clas) => upcomingClasses(clas)).toList(),
+            )));
+  }
 }

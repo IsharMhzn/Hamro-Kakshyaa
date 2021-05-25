@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-Widget appbar() {
-  return AppBar(
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget{
+  @override
+  Size get preferredSize => const Size.fromHeight(56);
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
     title: Text(
       "John Doe \nCE-2018",
       style: TextStyle(color: const Color(0xFF132C33)),
-      ),
+    ),
     backgroundColor: const Color(0xFF51C4D3),
     leading: GestureDetector(
         onTap: () {
@@ -23,11 +27,14 @@ Widget appbar() {
         padding: EdgeInsets.only(right: 2),
         child: IconButton(
           icon: Icon(Icons.logout),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           color: const Color(0xFF132C33),
           hoverColor: const Color(0xFF126E82),
         ),
       )
     ],
   );
+  }
 }
