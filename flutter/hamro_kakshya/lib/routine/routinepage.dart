@@ -57,7 +57,7 @@ class _RoutinePageState extends State<RoutinePage> {
             ),
           ),
           SizedBox(
-            height: 25,
+            height: 20,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -103,6 +103,11 @@ class _RoutinePageState extends State<RoutinePage> {
           ),
           ElevatedButton(
             child: Text('Upcoming Class'),
+            style: ElevatedButton.styleFrom(
+              primary: const Color(0xFF126E82), // background
+              onSurface: Colors.yellow,
+              onPrimary: Colors.white, // foreground
+            ), 
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => (UpcomingClass())));
@@ -181,7 +186,7 @@ class _UpcomingClassState extends State<UpcomingClass> {
     Class(
         subject: 'COMP 208',
         venue: 'Block 9 204',
-        classtime: TimeOfDay(hour: 12, minute: 0)),
+        classtime: TimeOfDay(hour: 22, minute: 0)),
     Class(
         subject: 'COMP 205',
         venue: 'Block 9 304',
@@ -201,9 +206,16 @@ class _UpcomingClassState extends State<UpcomingClass> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-            backgroundColor: Colors.blue,
-            appBar: AppBar(actions: [
+            // backgroundColor: const Color(0xffe1f6f7),
+            appBar: AppBar(
+              backgroundColor: const Color(0xFF51C4D3),
+              actions: [
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xFF126E82), // background
+                  onSurface: Colors.yellow,
+                  onPrimary: Colors.white, // foreground
+                ), 
                   onPressed: () {
                     Navigator.pop(context);
                   },
