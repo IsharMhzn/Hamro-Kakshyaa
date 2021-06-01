@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'notes.apps.NotesConfig',
+    'notice.apps.NoticeConfig',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +80,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'database',
+        'NAME': 'hk_db', # Aron = database, Ishar = hk_db
         'USER':'postgres',
         'PASSWORD':'postgres',
         'HOST' : 'localhost',
