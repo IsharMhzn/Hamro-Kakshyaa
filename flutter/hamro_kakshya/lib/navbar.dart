@@ -5,7 +5,7 @@ import 'notice.dart';
 import 'profile.dart';
 import 'routine/routinepage.dart';
 import 'note.dart';
-import 'routine/routine.dart';
+// import 'routine/routine.dart';
 
 void main() {
   runApp(MaterialApp(

@@ -105,7 +105,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+REST_FRAMEWORK ={
+    'DEFAULT_PERMISION_CLASSES':[
 
+        'rest-framework.permissions.AllowAny',
+    ]
+    
+    
+    
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
