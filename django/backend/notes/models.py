@@ -10,5 +10,5 @@ class Notes(models.Model):
     description =  models.TextField()
     title = models.CharField(max_length=100)
     file =  models.FileField(upload_to='documents/',validators=[
-        FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'ppt', 'xlsx'])])   
+        FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'ppt', 'xlsx','docx'])])   
 
