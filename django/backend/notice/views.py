@@ -3,10 +3,35 @@ from .serializers import NoticeSerializer
 
 from rest_framework import generics
 
-class NoticeList(generics.ListCreateAPIView):
-    queryset = Notice.objects.all()
+class NoticeList(generics.ListAPIView):
     serializer_class = NoticeSerializer
 
+    def get_queryset(self):
+        ''' filtering objects with respect to user and query parameters '''
+
+        # user = self.request.user
+        user = "student"
+        if user == "student":
+            # code = user.classcode
+            # return Notice.objects.filter(classcode=code)
+            objects =  Notice.objects.filter(classcode="CS18")
+        elif user == "teacher":
+            objects = Notice.objects.filter(author=user)
+
+            classcode = self.request.query_params.get('classcode')
+            if classcode is not None:
+                objects = objects.filter(classcode=classcode)
+        
+        subject = self.request.query_params.get('subject')
+        if subject is not None:
+            objects = objects.filter(subj_code = subject)
+            
+        return objects
+        
+
+class NoticeCreate(generics.CreateAPIView):
+    serializer_class = NoticeSerializer
+        
 class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Notice.objects.all()
     serializer_class = NoticeSerializer
