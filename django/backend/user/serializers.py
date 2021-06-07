@@ -19,17 +19,21 @@ class StudentSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
 
     class RegisterStudentSerializer(serializers.ModelSerializer):
+        registration_no = serializers.IntegerField( required = False)
+        batch = serializers.IntegerField(required = False)
+        is_CR = serializers.BooleanField(required = False)
         class Meta:
             model = Student
             fields = ('registration_no', 'batch', 'is_CR',)
 
     class RegisterTeacherSerializer(serializers.ModelSerializer):
+        email = serializers.EmailField(required = False)
         class Meta:
             model = Teacher
             fields = ('email',)
 
-    student = RegisterStudentSerializer(required= False)
-    teacher = RegisterTeacherSerializer(required = False)
+    student = RegisterStudentSerializer()
+    teacher = RegisterTeacherSerializer()
     class Meta: 
         model = User
         fields = ('id', 'username', 'password', 'is_student', 'is_teacher', 'faculty', 'photo','student', 'teacher')
@@ -51,9 +55,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             student_data = validated_data.pop('student')
             create_student = Student.objects.create(
                 user = user,
-                # registration_no = validated_data['registration_no'],
-                # batch = validated_data['batch'],
-                # is_CR = validated_data['is_CR'],
                 **student_data,
             )
 

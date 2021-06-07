@@ -10,17 +10,20 @@ class MyUserAdmin(UserAdmin):
     list_editable = ['faculty']
     search_fields = ['username']
     list_filter = ['faculty', 'is_student', 'is_teacher']
+    ordering = ['id']
 
 class TeacherAdmin(admin.ModelAdmin):
     model = Teacher
     list_display = ['user', 'email']
     search_fields = ['user__username', 'user__faculty']
+    ordering = ['user__id']
 
 class StudentAdmin(admin.ModelAdmin):
     model = Student
-    list_display = ['is_CR', 'user', 'registration_no', 'batch']
+    list_display = ['user', 'registration_no', 'batch', 'is_CR']
     list_filter = ['is_CR', 'batch', 'user__faculty']
     search_fields = ['user__username', 'batch', 'user__faculty']
+    ordering = ['user__id']
 
 
 admin.site.register(User, MyUserAdmin)
