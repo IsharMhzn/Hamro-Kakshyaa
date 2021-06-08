@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['192.168.1.74', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hk_db', # Aron = database, Ishar = hk_db
+        'NAME': 'database', # Aron = database, Ishar = hk_db
         'USER':'postgres',
         'PASSWORD':'postgres',
         'HOST' : 'localhost',
