@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'appbar.dart';
 import 'homescreen/homescreen.dart';
-import 'notice.dart';
+import 'notice/notice.dart';
 import 'profile.dart';
 import 'routine/routinepage.dart';
 import 'note.dart';

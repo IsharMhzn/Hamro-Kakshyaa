@@ -1,6 +1,8 @@
 from .models import Notice
 from .serializers import NoticeSerializer
 
+from user.models import User
+
 from rest_framework import generics
 
 class NoticeList(generics.ListAPIView):
@@ -10,12 +12,16 @@ class NoticeList(generics.ListAPIView):
         ''' filtering objects with respect to user and query parameters '''
 
         # user = self.request.user
-        user = "student"
-        if user == "student":
-            # code = user.classcode
-            # return Notice.objects.filter(classcode=code)
-            objects =  Notice.objects.filter(classcode="CS18")
-        elif user == "teacher":
+        user = User.objects.first()
+        if user.is_student:
+            faculty = user.faculty
+            batch = user.student.batch
+
+            classcode = ''.join([l[0] for l in faculty.split()]) + str(batch)[-2:]
+            print(classcode)
+            objects = Notice.objects.filter(classcode=classcode)
+            # objects = Notice.objects.filter(classcode="CS18")
+        elif user.is_teacher:
             objects = Notice.objects.filter(author=user)
 
             classcode = self.request.query_params.get('classcode')
@@ -23,6 +29,7 @@ class NoticeList(generics.ListAPIView):
                 objects = objects.filter(classcode=classcode)
         
         subject = self.request.query_params.get('subject')
+
         if subject is not None:
             objects = objects.filter(subj_code = subject)
             

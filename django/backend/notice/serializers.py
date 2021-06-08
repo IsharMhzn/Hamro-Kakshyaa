@@ -6,5 +6,5 @@ from rest_framework import serializers
 class NoticeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notice
-        fields = ('id', 'title', 'description', 'date_posted', 'classcode', 'author')
+        fields = ('id', 'title', 'description', 'date_posted', 'classcode', 'subj_code', 'author')
         
