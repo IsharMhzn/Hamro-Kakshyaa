@@ -9,6 +9,7 @@ djangorestframework = "*"
 psycopg2 = "*"
 httpie = "*"
 pillow = "*"
+django-filter = "*"
 
 [dev-packages]
 

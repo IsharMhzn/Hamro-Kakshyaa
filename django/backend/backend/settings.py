@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'user',
     'notes.apps.NotesConfig',
     'notice.apps.NoticeConfig',
+    # 'django_filters',
+    'subject',
 ]
 
 MIDDLEWARE = [
