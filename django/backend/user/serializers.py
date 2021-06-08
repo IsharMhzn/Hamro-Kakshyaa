@@ -4,7 +4,7 @@ from . models import User, Teacher, Student
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'is_student', 'is_teacher', 'faculty', 'photo')
+        fields = ('id', 'name', 'is_student', 'is_teacher', 'faculty', 'photo')
 
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,12 +36,12 @@ class RegisterSerializer(serializers.ModelSerializer):
     teacher = RegisterTeacherSerializer()
     class Meta: 
         model = User
-        fields = ('id', 'username', 'password', 'is_student', 'is_teacher', 'faculty', 'photo','student', 'teacher')
+        fields = ('id', 'name', 'password', 'is_student', 'is_teacher', 'faculty', 'photo','student', 'teacher')
         extra_kwargs = {'password':{'write_only':True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            username = validated_data['username'],
+            name = validated_data['name'],
             password = validated_data['password'],
             is_student = validated_data['is_student'],
             is_teacher = validated_data['is_teacher'],
