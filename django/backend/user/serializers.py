@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from . models import User, Teacher, Student
+from .models import User, Teacher, Student
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'name', 'is_student', 'is_teacher', 'faculty', 'photo')
+        fields = ('id', 'name','username', 'is_student', 'is_teacher', 'faculty', 'photo')
 
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,11 +37,12 @@ class RegisterSerializer(serializers.ModelSerializer):
     teacher = RegisterTeacherSerializer()
     class Meta: 
         model = User
-        fields = ('id', 'name', 'password', 'is_student', 'is_teacher', 'faculty', 'photo','student', 'teacher')
+        fields = ('id', 'name', 'username', 'password', 'is_student', 'is_teacher', 'faculty', 'photo','student', 'teacher')
         extra_kwargs = {'password':{'write_only':True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(
+            username = validated_data['username'],
             name = validated_data['name'],
             password = validated_data['password'],
             is_student = validated_data['is_student'],
@@ -71,7 +73,41 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-# class LoginSerializer(serializers.Serializer):
+class LoginSerializer(TokenObtainPairSerializer):
+    # @classmethod
+    # def get_token(cls, user):
+    #     token = super().get_token(user)
+
+    #     # Add custom claims
+    #     token['is_student'] = user.is_student
+    #     token['is_teacher'] = user.is_teacher
+    #     return token
 
     
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+        
 
+        # Add extra responses here
+        data['id'] = self.user.id
+        data['is_student'] = self.user.is_student
+        data['is_teacher'] = self.user.is_teacher
+
+        # if self.user.is_student:
+        #     data['registration_no'] = student.registration_no
+        # elif self.user.is_teacher:
+        #     data['email'] = self.user.email
+        # else:
+        #     data['name'] = self.user.name
+
+        return data
+
+
+
+
+
+
+        

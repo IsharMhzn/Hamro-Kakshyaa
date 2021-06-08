@@ -1,6 +1,9 @@
-from rest_framework import generics
+from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
-from .serializers import UserSerializer, RegisterSerializer
+from .models import Student, Teacher, User
+from .serializers import StudentSerializer, UserSerializer, RegisterSerializer, LoginSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 # Create your views here.
 class RegisterAPI(generics.GenericAPIView):
@@ -14,4 +17,6 @@ class RegisterAPI(generics.GenericAPIView):
             "user": UserSerializer(user, context = self.get_serializer_context()).data,
         })
 
-        
+class LoginAPI(TokenObtainPairView):
+    serializer_class = LoginSerializer
+
