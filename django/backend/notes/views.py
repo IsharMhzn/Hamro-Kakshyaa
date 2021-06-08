@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from . import models
 from .serializer import NotesSerializers
-
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response 
@@ -13,7 +13,17 @@ from rest_framework.permissions import IsAuthenticated
 class ListNotes(generics.ListCreateAPIView):
     serializer_class =  NotesSerializers
     queryset =  models.Notes.objects.all()    
+    filter_ackends = [DjangoFilterBackend]
+     
+    filterset_fields = ['title']
+    # def get_queryset(self):
+    #     if self.request.user == "student" :
+    #         dataFiltered = models.Notes.objects.filter(classcode='xyz')
+    #         #having 1 classcode we get access to all the subjects in the classs so we be getting notes of all subjects futher on this later 
 
+
+    #         return dataFiltered
+    
 
 
 

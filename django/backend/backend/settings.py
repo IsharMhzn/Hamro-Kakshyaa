@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'notes.apps.NotesConfig',
     'notice.apps.NoticeConfig',
-    'user'
+    'django_filters',
+    'user',
+    'subject',
 ]
 
 MIDDLEWARE = [
