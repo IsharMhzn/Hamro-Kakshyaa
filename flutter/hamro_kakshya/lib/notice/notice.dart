@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamro_kakshya/notice/noticeform.dart';
 import 'package:http/http.dart' as http;
 
 import './noticeclass.dart';
@@ -10,6 +11,7 @@ class Notice extends StatefulWidget {
 
 class _NoticeState extends State<Notice> {
   Future<List<NoticeClass>> futureNotices;
+
   // final subjectController = TextEditingController();
 
   @override
@@ -30,21 +32,31 @@ class _NoticeState extends State<Notice> {
       title: "Hamroo Kakshyaa",
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
-          body: FutureBuilder(
-        future: futureNotices,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return NoticeList(notices: snapshot.data);
-          } else if (snapshot.hasError) {
-            print(snapshot.error);
-            return Text(snapshot.error.toString());
-          }
-          return Center(
-              child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation(Color(0xFF126E82)),
-          ));
-        },
-      )),
+        body: FutureBuilder(
+          future: futureNotices,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return NoticeList(notices: snapshot.data);
+            } else if (snapshot.hasError) {
+              print(snapshot.error);
+              return Text(snapshot.error.toString());
+            }
+            return Center(
+                child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation(Color(0xFF126E82)),
+            ));
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print("Notice post button pressed");
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => NoticeForm()));
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xFF126E82),
+        ),
+      ),
     );
   }
 }
@@ -70,7 +82,7 @@ class NoticeList extends StatelessWidget {
                   color: const Color(0xFF132C33),
                   size: 30.0,
                 ),
-                title: new Text(notices[index].subj_code),
+                title: new Text(notices[index].subjectcode.code),
                 subtitle: new Text(notices[index].title),
                 // isThreeLine: true,
                 trailing: new Icon(
