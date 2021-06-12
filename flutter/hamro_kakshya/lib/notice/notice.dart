@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamro_kakshya/notice/noticedetail.dart';
 import 'package:hamro_kakshya/notice/noticeform.dart';
 import 'package:http/http.dart' as http;
 
@@ -75,7 +76,10 @@ class NoticeList extends StatelessWidget {
             color: Color(0xffe1f6f7),
             margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => NoticeDetail()));
+              },
               child: new ListTile(
                 leading: new Icon(
                   Icons.notifications_active,

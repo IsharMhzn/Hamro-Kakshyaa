@@ -10,6 +10,7 @@ psycopg2 = "*"
 httpie = "*"
 pillow = "*"
 django-filter = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
