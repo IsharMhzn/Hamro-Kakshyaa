@@ -1,7 +1,8 @@
 from .models import Notice
-from .serializers import NoticeSerializer
+from .serializers import NoticeSerializer, NoticeCreateSerializer
 
 from user.models import User
+from subject.models import ClassCode
 
 from rest_framework import generics
 
@@ -17,7 +18,7 @@ class NoticeList(generics.ListAPIView):
             faculty = user.faculty
             batch = user.student.batch
 
-            classcode = ''.join([l[0] for l in faculty.split()]) + str(batch)[-2:]
+            classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
             print(classcode)
             objects = Notice.objects.filter(classcode=classcode)
             # objects = Notice.objects.filter(classcode="CS18")
@@ -26,6 +27,7 @@ class NoticeList(generics.ListAPIView):
 
             classcode = self.request.query_params.get('classcode')
             if classcode is not None:
+                classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
                 objects = objects.filter(classcode=classcode)
         
         subject = self.request.query_params.get('subject')
@@ -37,7 +39,8 @@ class NoticeList(generics.ListAPIView):
         
 
 class NoticeCreate(generics.CreateAPIView):
-    serializer_class = NoticeSerializer
+    serializer_class = NoticeCreateSerializer
+
         
 class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Notice.objects.all()

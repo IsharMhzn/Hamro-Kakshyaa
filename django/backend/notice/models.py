@@ -1,23 +1,14 @@
 from django.db import models
 from user.models import User
-
-# Create your models here.
-# class Class(models.Model):
-#     course = models.CharField(max_length=100, blank=False, default="Computer Engineering")
-#     batch = models.IntegerField(default=2018)
-    
-#     @property
-#     def code(self):
-#         return ''.join((str(l[0]) for l in self.course.split())) + str(self.batch)[-2:]
-
+from subject.models import ClassCode, SubjectCode
+  
 class Notice(models.Model):
     title = models.CharField(max_length=150, default="This is the title")
     description = models.TextField()
-    subj_code = models.CharField(default="COMP101", max_length=15)
+    subjectcode = models.ForeignKey(SubjectCode, default=1 ,  on_delete=models.CASCADE)
+    classcode = models.ForeignKey(ClassCode, default=1 ,on_delete=models.CASCADE)
     date_posted = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    classcode = models.CharField(default='CE18', max_length=10)
-    # code = models.ForeignKey(Class, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, default=1, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.classcode}: {self.title}"
