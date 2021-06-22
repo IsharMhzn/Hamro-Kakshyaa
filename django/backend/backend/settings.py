@@ -83,7 +83,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hk_db', # Aron = database, Ishar = hk_db
+        'NAME': 'database', # Aron = database, Ishar = hk_db
         'USER':'postgres',
         'PASSWORD':'postgres',
         'HOST' : 'localhost',
@@ -148,7 +148,7 @@ MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Customizing the behaviour of our access tokens 
 from datetime import timedelta
