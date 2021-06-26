@@ -7,4 +7,5 @@ urlpatterns = [
     path('', include('user.urls')),
     path('notes/',include('notes.urls')),
     path('notice/', include('notice.urls')),
+    path('classRoutine/',include('classRoutine.urls')),
 ]

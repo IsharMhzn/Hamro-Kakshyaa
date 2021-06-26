@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'notice.apps.NoticeConfig',
     # 'django_filters',
     'subject.apps.SubjectConfig',
+    'classRoutine',
 ]
 
 MIDDLEWARE = [
