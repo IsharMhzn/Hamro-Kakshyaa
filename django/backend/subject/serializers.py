@@ -9,4 +9,4 @@ class SubjectCodeSerializer(serializers.ModelSerializer):
 class ClassCodeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ClassCode
-        fields = "faculty", "batch"
+        fields = "faculty", "batch", "code"

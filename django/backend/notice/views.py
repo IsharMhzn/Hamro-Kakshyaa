@@ -35,7 +35,7 @@ class NoticeList(generics.ListAPIView):
         if subject is not None:
             objects = objects.filter(subj_code = subject)
             
-        return objects
+        return objects[::-1]
         
 
 class NoticeCreate(generics.CreateAPIView):

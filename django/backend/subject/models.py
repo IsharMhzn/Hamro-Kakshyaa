@@ -6,10 +6,11 @@ from user.models import Teacher
 class ClassCode(models.Model):
     faculty = models.CharField(max_length=150)
     batch = models.CharField(max_length=100)
+    code = models.CharField(default = 'ce18', max_length=10)
 
-    @property
-    def code(self):
-        return ''.join((str(l[0]) for l in self.faculty.split())) + str(self.batch)[-2:]
+    # @property
+    # def code(self):
+    #     return ''.join((str(l[0]).lower() for l in self.faculty.split())) + str(self.batch)[-2:]
     
     def __str__(self):
         return f'{self.faculty}: {self.batch}'

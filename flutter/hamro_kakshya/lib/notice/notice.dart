@@ -36,11 +36,12 @@ class _NoticeState extends State<Notice> {
         body: FutureBuilder(
           future: futureNotices,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return NoticeList(notices: snapshot.data);
-            } else if (snapshot.hasError) {
-              print(snapshot.error);
-              return Text(snapshot.error.toString());
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                return NoticeList(notices: snapshot.data);
+              } else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }
             }
             return Center(
                 child: CircularProgressIndicator(
@@ -77,8 +78,13 @@ class NoticeList extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
             child: InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NoticeDetail()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NoticeDetail(
+                              notices: this.notices,
+                              index: index,
+                            )));
               },
               child: new ListTile(
                 leading: new Icon(

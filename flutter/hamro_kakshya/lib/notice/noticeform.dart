@@ -195,8 +195,10 @@ class _NoticeFormState extends State<NoticeForm> {
                             SubjectCode subject =
                                 SubjectCode(code: subjectcode, name: 'Meow');
 
-                            ClassCode class_code =
-                                ClassCode(faculty: classcode, batch: '2018');
+                            ClassCode class_code = ClassCode(
+                                faculty: classcode,
+                                batch: '2018',
+                                code: classcode);
 
                             NoticeClass notice = NoticeClass(
                                 title: title,

@@ -11,6 +11,9 @@ httpie = "*"
 pillow = "*"
 django-filter = "*"
 djangorestframework-simplejwt = "*"
+bs4 = "*"
+beautifulsoup4 = "*"
+requests = "*"
 
 [dev-packages]
 
