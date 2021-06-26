@@ -74,15 +74,6 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(TokenObtainPairSerializer):
-    # @classmethod
-    # def get_token(cls, user):
-    #     token = super().get_token(user)
-
-    #     # Add custom claims
-    #     token['is_student'] = user.is_student
-    #     token['is_teacher'] = user.is_teacher
-    #     return token
-
     
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -104,6 +95,8 @@ class LoginSerializer(TokenObtainPairSerializer):
         #     data['name'] = self.user.name
 
         return data
+
+
 
 
 
