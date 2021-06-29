@@ -10,20 +10,21 @@ from .models import classRoutine
 
 class ListClassRoutine(generics.ListCreateAPIView):
     serializer_class = ClassRoutineSerializer
-    def get_queryset(self):
-        user = self.request.user
-        if user.is_student:
-            faculty =  user.faculty
-            batch = user.student.batch
+    queryset  = classRoutine.objects.all() 
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     if user.is_student:
+    #         faculty =  user.faculty
+    #         batch = user.student.batch
 
-            classcode = ClassCode.objects.get(batch=batch, faculty=faculty)
+    #         classcode = ClassCode.objects.get(batch=batch, faculty=faculty)
 
-            objects = classRoutine.objects.filter(classcode = classcode)
-            return objects
+    #         objects = classRoutine.objects.filter(classcode = classcode)
+    #         return objects
 
-        elif user.is_teacher:
-            objects =  classRoutine.objects.filter(teacher = user)
-            return objects
+    #     elif user.is_teacher:
+    #         objects =  classRoutine.objects.filter(teacher = user)
+    #         return objects
        
 
 
