@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -9,10 +10,10 @@ void main() {
 }
 
 Future<LoginClass> performLogin(String username, String password) async{
+  var url = dotenv.env['HOST'];
   var client = http.Client();
-  var url = Uri.parse('http://192.168.1.106:8000/login/');
   final response = await client.post(
-    url,
+     Uri.parse('$url/login/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

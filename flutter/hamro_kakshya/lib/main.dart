@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'navbar.dart';
 import 'appbar.dart';
 import 'login/register1.dart';
 import 'login/register2.dart';
 import 'login/login.dart';
 
-void main() {
+Future main() async{
+  await dotenv.load(fileName: "assets/env/.env");
   runApp(MaterialApp(
       home: Home(),
       debugShowCheckedModeBanner: false,
