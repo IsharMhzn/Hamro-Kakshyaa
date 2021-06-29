@@ -1,11 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 void main() {
   runApp(Login());
 }
 
-class Login extends StatelessWidget {
+Future<LoginClass> performLogin(String username, String password) async{
+  var url = Uri.parse('http://127.0.0.1:8000/login/');
+  final response = await http.post(
+    url,
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'username': username,
+      'password': password,
+    }),
+  );
+    if (response.statusCode == 201) {
+      return LoginClass.fromJson(jsonDecode(response.body));
+  } else {
+      throw Exception('Failed to login the user.');
+  }
+} 
+
+class LoginClass{
+  final String username;
+  final String password;
+
+  LoginClass({this.username, this.password});
+
+  factory LoginClass.fromJson(Map<String, dynamic> json) {
+    return LoginClass(
+      username: json['username'],
+      password: json['password'],
+    );
+  }
+}
+
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _controller = TextEditingController();
+  Future<LoginClass> _futureLogin;
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -74,7 +119,7 @@ class Login extends StatelessWidget {
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
-                                    labelText: 'Registration number',
+                                    labelText: 'Username',
                                   ),
                                 ))),
                       ),
@@ -123,3 +168,4 @@ class Login extends StatelessWidget {
                     ])))));
   }
 }
+

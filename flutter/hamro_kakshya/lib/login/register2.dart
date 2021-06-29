@@ -77,7 +77,7 @@ class Register2 extends StatelessWidget {
                     obscureText: false,
                     decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Registration number',
+                    labelText: 'Username',
                     ),
                 )   
               )
