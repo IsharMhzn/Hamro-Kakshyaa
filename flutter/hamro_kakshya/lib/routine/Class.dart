@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -52,8 +52,9 @@ class RoutineClass {
 }
 
 Future<List<RoutineClass>> fetchNotices(http.Client client) async {
+  var url = dotenv.env['HOST'];
   final response =
-      await client.get(Uri.parse('http://192.168.254.9:8000/classRoutine/'));
+      await client.get(Uri.parse('$url/classRoutine/'));
 
   if (response.statusCode == 200) {
     return parseNotices(response.body);
