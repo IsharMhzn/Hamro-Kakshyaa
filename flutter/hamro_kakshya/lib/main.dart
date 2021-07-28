@@ -4,6 +4,9 @@ import 'appbar.dart';
 import 'login/register1.dart';
 import 'login/register2.dart';
 import 'login/login.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = FlutterSecureStorage();
 
 void main() {
   runApp(MaterialApp(

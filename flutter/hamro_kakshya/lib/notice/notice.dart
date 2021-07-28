@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:hamro_kakshya/notice/noticedetail.dart';
 import 'package:hamro_kakshya/notice/noticeform.dart';
@@ -38,7 +40,10 @@ class _NoticeState extends State<Notice> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
-                return NoticeList(notices: snapshot.data);
+                return RefreshIndicator(
+                  child: NoticeList(notices: snapshot.data),
+                  onRefresh: pullNoticeRefresh,
+                );
               } else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               }
@@ -60,6 +65,13 @@ class _NoticeState extends State<Notice> {
         ),
       ),
     );
+  }
+
+  Future<Void> pullNoticeRefresh() async {
+    Future<List<NoticeClass>> notices = fetchNotices(http.Client());
+    setState(() {
+      futureNotices = notices;
+    });
   }
 }
 

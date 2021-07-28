@@ -8,7 +8,7 @@ void main() {
   runApp(Login());
 }
 
-Future<LoginClass> performLogin(String username, String password) async{
+Future<String> performLogin(String username, String password) async {
   var url = Uri.parse('http://127.0.0.1:8000/login/');
   final response = await http.post(
     url,
@@ -20,14 +20,16 @@ Future<LoginClass> performLogin(String username, String password) async{
       'password': password,
     }),
   );
-    if (response.statusCode == 201) {
-      return LoginClass.fromJson(jsonDecode(response.body));
+  if (response.statusCode == 201) {
+    print(response.body);
+    return (response.body);
+    // return LoginClass.fromJson(jsonDecode(response.body));
   } else {
-      throw Exception('Failed to login the user.');
+    throw Exception('Failed to login the user.');
   }
-} 
+}
 
-class LoginClass{
+class LoginClass {
   final String username;
   final String password;
 
@@ -49,7 +51,6 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _controller = TextEditingController();
   Future<LoginClass> _futureLogin;
-
 
   @override
   Widget build(BuildContext context) {
@@ -168,4 +169,3 @@ class _LoginState extends State<Login> {
                     ])))));
   }
 }
-

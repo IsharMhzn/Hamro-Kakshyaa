@@ -3,17 +3,23 @@ from .serializers import NoticeSerializer, NoticeCreateSerializer
 
 from user.models import User
 from subject.models import ClassCode
+from user.views import UseJWTAuthentication
 
 from rest_framework import generics
+from rest_framework import permissions
 
 class NoticeList(generics.ListAPIView):
     serializer_class = NoticeSerializer
+    permission_class = [permissions.IsAuthenticated, ]
+    authentication_class = UseJWTAuthentication
 
     def get_queryset(self):
         ''' filtering objects with respect to user and query parameters '''
 
-        # user = self.request.user
-        user = User.objects.first()
+        user = self.request.user
+
+        # if user.is_authenticated:
+        #     # user = User.objects.first()
         if user.is_student:
             faculty = user.faculty
             batch = user.student.batch

@@ -13,6 +13,8 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class StudentSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
     class Meta:
         model = Student
         fields = '__all__'
