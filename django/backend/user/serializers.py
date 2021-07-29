@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'name','username', 'is_student', 'is_teacher', 'faculty', 'photo')
 
 class TeacherSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Teacher
         fields = '__all__'
