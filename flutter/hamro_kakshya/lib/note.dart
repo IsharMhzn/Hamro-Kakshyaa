@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
 Future<NotesClass> fetchNotes() async {
-  final response = await http.get(Uri.parse('http://192.168.1.74:8000/notes/'));
+  var url = dotenv.env['HOST'];
+  final response = await http.get(Uri.parse('$url/notes/'));
 
   if (response.statusCode == 200) {
     return NotesClass.fromJson(jsonDecode(response.body)[0]);

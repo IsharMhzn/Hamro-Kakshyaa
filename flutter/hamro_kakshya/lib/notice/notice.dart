@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:hamro_kakshya/main.dart';
 import 'package:hamro_kakshya/notice/noticedetail.dart';
 import 'package:hamro_kakshya/notice/noticeform.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +7,11 @@ import 'package:http/http.dart' as http;
 import './noticeclass.dart';
 
 class Notice extends StatefulWidget {
+  String jwt;
+
+  Notice() {
+    storage.read(key: "jwt").then((value) => jwt = value);
+  }
   @override
   _NoticeState createState() => _NoticeState();
 }
@@ -19,7 +23,7 @@ class _NoticeState extends State<Notice> {
 
   @override
   void initState() {
-    futureNotices = fetchNotices(http.Client());
+    futureNotices = fetchNotices(http.Client(), widget.jwt);
     super.initState();
   }
 
@@ -40,11 +44,9 @@ class _NoticeState extends State<Notice> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.hasData) {
-                return RefreshIndicator(
-                  child: NoticeList(notices: snapshot.data),
-                  onRefresh: pullNoticeRefresh,
-                );
+                return NoticeList(notices: snapshot.data);
               } else if (snapshot.hasError) {
+                print(snapshot.error);
                 return Text(snapshot.error.toString());
               }
             }
@@ -65,13 +67,6 @@ class _NoticeState extends State<Notice> {
         ),
       ),
     );
-  }
-
-  Future<Void> pullNoticeRefresh() async {
-    Future<List<NoticeClass>> notices = fetchNotices(http.Client());
-    setState(() {
-      futureNotices = notices;
-    });
   }
 }
 

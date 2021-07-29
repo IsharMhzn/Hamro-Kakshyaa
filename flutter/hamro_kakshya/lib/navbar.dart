@@ -4,6 +4,7 @@ import 'homescreen/homescreen.dart';
 import 'notice/notice.dart';
 import 'profile.dart';
 import 'routine/routinepage.dart';
+import 'routine/routine.dart';
 import 'note.dart';
 // import 'routine/routine.dart';
 
@@ -40,7 +41,7 @@ class NavBar extends StatelessWidget {
               HomeScreen(),
               Notice(),
               Note(),
-              RoutinePage(),
+              RoutineSec(),
               Profile(),
             ],
           )),

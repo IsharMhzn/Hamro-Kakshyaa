@@ -1,6 +1,6 @@
 import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:hamro_kakshya/subject/classcode.dart';
 import 'package:hamro_kakshya/subject/subjectcode.dart';
 import 'package:http/http.dart' as http;
@@ -33,7 +33,7 @@ class NoticeClass {
     }
 
     this.time = '$hour:$min $t';
-    print(this.time);
+    // print(this.time);
   }
 
   factory NoticeClass.fromJson(Map<String, dynamic> json) {
@@ -56,14 +56,20 @@ class NoticeClass {
   }
 }
 
-Future<List<NoticeClass>> fetchNotices(http.Client client,
+Future<List<NoticeClass>> fetchNotices(http.Client client, String jwt,
     {String subject = ""}) async {
+  // var url = dotenv.env['HOST'];
+  print("fetching notices");
+  // print(jwt);
+  var bearer_token = json.decode(jwt)["access"];
+  print(bearer_token);
+  var url = "http://192.168.1.74:8000";
   String query = "";
   if (subject.isNotEmpty) {
     query = "?q=" + subject;
   }
-  final response =
-      await client.get(Uri.parse('http://192.168.1.74:8000/notice/${query}'));
+  final response = await client.get(Uri.parse('$url/notice/$query'),
+      headers: {"Authorization": "Bearer $bearer_token"});
 
   if (response.statusCode == 200) {
     return parseNotices(response.body);
@@ -82,8 +88,9 @@ List<NoticeClass> parseNotices(String responseBody) {
 }
 
 Future<NoticeClass> createNotice(NoticeClass notice) async {
+  var url = dotenv.env['HOST'];
   final response = await http.post(
-    Uri.parse('http://192.168.1.74:8000/notice/create/'),
+    Uri.parse('$url/notice/create/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8'
     },

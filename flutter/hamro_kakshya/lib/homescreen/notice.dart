@@ -48,7 +48,8 @@ Widget noticeBlock() {
 
   return Container(
     padding: EdgeInsets.all(5),
-    child: Column(
+    child: SingleChildScrollView(
+      child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -67,6 +68,7 @@ Widget noticeBlock() {
           indent: 100,
           endIndent: 100,
         ),
+        // Expanded(
         Column(
           children: latestNotices
               .map(
@@ -76,5 +78,5 @@ Widget noticeBlock() {
         ),
       ],
     ),
-  );
+  ));
 }
