@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'appbar.dart';
 import 'homescreen/homescreen.dart';
 import 'notice/notice.dart';
-import 'profile.dart';
+import 'profile/profile.dart';
 import 'routine/routinepage.dart';
 import 'routine/routine.dart';
 import 'note.dart';

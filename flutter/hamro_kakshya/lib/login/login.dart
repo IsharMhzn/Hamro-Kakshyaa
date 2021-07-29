@@ -12,7 +12,7 @@ void main() {
 }
 
 Future<String> performLogin(String username, String password) async {
-  // print("meow");
+  print("loggin in...");
   var url = Uri.parse('http://192.168.1.74:8000');
   var client = http.Client();
   final response = await client.post(
@@ -174,6 +174,9 @@ class _LoginState extends State<Login> {
                                         // print(jwt);
                                         if (jwt != null) {
                                           storage.write(key: "jwt", value: jwt);
+                                          print("saving jwt...");
+                                          print(
+                                              "for id ${json.decode(jwt)["id"]}");
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
