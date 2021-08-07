@@ -3,6 +3,7 @@ import '../homescreen/routine.dart';
 import 'routinepage.dart';
 import 'package:http/http.dart' as http;
 import './Class.dart';
+import './routineform.dart';
 
 class RoutineSec extends StatefulWidget {
   @override
@@ -40,15 +41,15 @@ class _RoutineSecState extends State<RoutineSec> {
             ));
           },
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {
-        //     print("Notice post button pressed");
-        //     Navigator.push(
-        //         context, MaterialPageRoute(builder: (context) => NoticeForm()));
-        //   },
-        //   child: Icon(Icons.add),
-        //   backgroundColor: Color(0xFF126E82),
-        // ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print("Notice post button pressed");
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => RoutineForm()));
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xFF126E82),
+        ),
       ),
     );
   }

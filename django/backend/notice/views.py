@@ -13,34 +13,34 @@ class NoticeList(generics.ListAPIView):
         ''' filtering objects with respect to user and query parameters '''
 
         # user = self.request.user
-        user = User.objects.first()
-        if user.is_student:
-            faculty = user.faculty
-            batch = user.student.batch
+        user = User.objects.all()
+        # if user.is_student:
+        #     faculty = user.faculty
+        #     batch = user.student.batch
 
-            classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
-            print(classcode)
-            objects = Notice.objects.filter(classcode=classcode)
-            # objects = Notice.objects.filter(classcode="CS18")
-        elif user.is_teacher:
-            objects = Notice.objects.filter(author=user)
+        #     classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
+        #     print(classcode)
+        #     objects = Notice.objects.filter(classcode=classcode)
+        #     # objects = Notice.objects.filter(classcode="CS18")
+        # elif user.is_teacher:
+        #     objects = Notice.objects.filter(author=user)
 
-            classcode = self.request.query_params.get('classcode')
-            if classcode is not None:
-                classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
-                objects = objects.filter(classcode=classcode)
+        #     classcode = self.request.query_params.get('classcode')
+        #     if classcode is not None:
+        #         classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
+        #         objects = objects.filter(classcode=classcode)
         
-        subject = self.request.query_params.get('subject')
+        # subject = self.request.query_params.get('subject')
 
-        if subject is not None:
-            objects = objects.filter(subj_code = subject)
+        # if subject is not None:
+        #     objects = objects.filter(subj_code = subject)
             
-        return objects[::-1]
+        # return objects[::-1]
         
 
 class NoticeCreate(generics.CreateAPIView):
     serializer_class = NoticeCreateSerializer
-
+    print("I n Notice")
         
 class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Notice.objects.all()

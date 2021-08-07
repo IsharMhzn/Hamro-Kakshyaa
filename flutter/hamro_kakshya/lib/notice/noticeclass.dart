@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class NoticeClass {
   final String title, description, date;
-  String time;
+  final String time;
   final SubjectCode subjectcode;
   final ClassCode classcode;
 
@@ -19,21 +19,21 @@ class NoticeClass {
       this.classcode,
       this.date,
       this.time}) {
-    int hour, min;
-    String t;
-    List<String> vals = time.split('-');
-    hour = int.parse(vals[0]);
-    min = int.parse(vals[1]);
+    // int hour, min;
+    // String t;
+    // List<String> vals = time.split('-');
+    // hour = int.parse(vals[0]);
+    // min = int.parse(vals[1]);
 
-    if (hour > 12) {
-      hour -= 12;
-      t = 'PM';
-    } else {
-      t = 'AM';
-    }
+    // if (hour > 12) {
+    //   hour -= 12;
+    //   t = 'PM';
+    // } else {
+    //   t = 'AM';
+    // }
 
-    this.time = '$hour:$min $t';
-    print(this.time);
+    // this.time = '$hour:$min $t';
+    // print(this.time);
   }
 
   factory NoticeClass.fromJson(Map<String, dynamic> json) {
@@ -63,7 +63,7 @@ Future<List<NoticeClass>> fetchNotices(http.Client client,
     query = "?q=" + subject;
   }
   final response =
-      await client.get(Uri.parse('http://192.168.1.74:8000/notice/${query}'));
+      await client.get(Uri.parse('http://192.168.254.9:8000/notice/${query}'));
 
   if (response.statusCode == 200) {
     return parseNotices(response.body);
@@ -83,7 +83,7 @@ List<NoticeClass> parseNotices(String responseBody) {
 
 Future<NoticeClass> createNotice(NoticeClass notice) async {
   final response = await http.post(
-    Uri.parse('http://192.168.1.74:8000/notice/create/'),
+    Uri.parse('http://192.168.254.9:8000/notice/create/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8'
     },
