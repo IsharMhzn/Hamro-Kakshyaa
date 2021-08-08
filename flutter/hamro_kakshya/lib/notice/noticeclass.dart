@@ -88,7 +88,7 @@ List<NoticeClass> parseNotices(String responseBody) {
 }
 
 Future<NoticeClass> createNotice(NoticeClass notice) async {
-  var url = dotenv.env['HOST'];
+  var url = "http://192.168.1.74:8000";
   final response = await http.post(
     Uri.parse('$url/notice/create/'),
     headers: <String, String>{
