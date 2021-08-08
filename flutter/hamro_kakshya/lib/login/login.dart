@@ -13,7 +13,7 @@ void main() {
 
 Future<String> performLogin(String username, String password) async {
   print("loggin in...");
-  var url = Uri.parse('http://192.168.1.74:8000');
+  var url = Uri.parse('http://192.168.100.161:8000');
   var client = http.Client();
   final response = await client.post(
     Uri.parse('$url/login/'),
@@ -29,6 +29,9 @@ Future<String> performLogin(String username, String password) async {
     // print(response.body);
     return (response.body);
     // return LoginClass.fromJson(jsonDecode(response.body));
+  }
+  else{
+    print('Incorrect credentials.');
   }
   return null;
 }
@@ -58,7 +61,7 @@ class _LoginState extends State<Login> {
 
   String jwt;
 
-  Future<LoginClass> _futureLogin;
+  // Future<LoginClass> _futureLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -177,6 +180,7 @@ class _LoginState extends State<Login> {
                                           print("saving jwt...");
                                           print(
                                               "for id ${json.decode(jwt)["id"]}");
+                                          CircularProgressIndicator();
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -197,21 +201,4 @@ class _LoginState extends State<Login> {
                       new Spacer(),
                     ])))));
   }
-
-  // FutureBuilder<LoginClass> buildFutureBuilder() {
-  //     return FutureBuilder<LoginClass>(
-  //       future: _futureLogin,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           return Text(snapshot.data.username);
-  //         } else if (snapshot.hasError) {
-  //           return Text('${snapshot.error}');
-  //         }
-
-  //         return CircularProgressIndicator();
-  //       },
-  //     );
-  //   }
-  // }
-
 }

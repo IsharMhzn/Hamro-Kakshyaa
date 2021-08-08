@@ -15,6 +15,7 @@ void main() {
   // await dotenv.load(fileName: "assets/env/.env");
   runApp(MaterialApp(
       // home: Home(),
+      // home: Register1(),
       debugShowCheckedModeBanner: false,
       initialRoute: '/register1',
       // home: Navigate()
@@ -22,8 +23,8 @@ void main() {
         '/register1': (context) => Register1(),
         '/register2': (conetxt) => Register2(),
         '/login': (context) => Login(),
-        '/logour': (context) => MyAppBar(),
-        // '/home': (context) => Home()
+        '/logout': (context) => MyAppBar(),
+        // '/home': (context) => Home(),
       }));
 }
 

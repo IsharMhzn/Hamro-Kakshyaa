@@ -38,6 +38,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     student = RegisterStudentSerializer()
     teacher = RegisterTeacherSerializer()
+    photo = serializers.ImageField(required = False)
     class Meta: 
         model = User
         fields = ('id', 'name', 'username', 'password', 'is_student', 'is_teacher', 'faculty', 'photo','student', 'teacher')
@@ -51,10 +52,12 @@ class RegisterSerializer(serializers.ModelSerializer):
             is_student = validated_data['is_student'],
             is_teacher = validated_data['is_teacher'],
             faculty = validated_data['faculty'],
-            photo = validated_data['photo']
+            # photo = validated_data['photo']
+            photo = validated_data.get('photo', None)
         )
         is_student = validated_data['is_student']
         is_teacher = validated_data['is_teacher']
+        print(user)
 
         if is_student:
             student_data = validated_data.pop('student')
@@ -62,6 +65,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                 user = user,
                 **student_data,
             )
+            print(student_data)
 
         elif is_teacher:
             teacher_data = validated_data.pop('teacher')
@@ -69,9 +73,10 @@ class RegisterSerializer(serializers.ModelSerializer):
                 user = user,
                 **teacher_data,
             )
+            print(teacher_data)
 
         else:
-            pass
+            print("Nothing.")
 
         return user
 
