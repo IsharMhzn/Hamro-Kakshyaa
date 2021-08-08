@@ -294,6 +294,7 @@ class _RegisterUsersState extends State<RegisterUsers> {
                         batch : int.parse(_batchcontroller.text),
                         isCR: _isCRcontroller,
                         isStudent: true,
+                        isTeacher: false,
                     )
                       )
                       
@@ -405,6 +406,7 @@ class _RegisterUsersState extends State<RegisterUsers> {
                         faculty: _facultycontroller.text, 
                         email: _emailcontroller.text, 
                         isTeacher: true,
+                        isStudent: false,
                         )
                       )
                     ) );

@@ -61,179 +61,86 @@ Future<RegisterUsers> performRegister(String name, String faculty, int registrat
     email = 'test@gmail.com';
   }
 
-  print ("While catching");
-  print(file);
-  // var url = Uri.parse('http://192.168.100.161:8000');
-  // var request = http.MultipartRequest('POST', url);
-  // request.fields['name'] = name;
-  // request.fields['username'] = username;
-  // request.fields['password'] = password;
-  // request.fields['is_student'] = http.MultipartRequest.toString(isStudent);
-  // request.fields['name'] = name;
-  // request.fields['name'] = name;
-  // request.fields['name'] = name;
-  // request.fields['name'] = name;
-  // request.fields['name'] = name;
-  // request.fields['name'] = name;
-  // request.fields['name'] = name;
-  // request.fields['name'] = name;
-  // request.fields['name'] = name;
-  // // request.files.add()
-
   String photoname = file.path.split('/').last;
-  print(photoname);
-  print('Happening');
+
   Response response;
   Dio dio = new Dio();
   var url = 'http://192.168.100.161:8000/register/';
 
-  // final data = {
-  //   'name': name,
-  //   'username': username,
-  //   'password': password,
-  //   'is_student': isStudent,
-  //   'is_teacher': isTeacher,
-  //   'faculty': faculty,
-  //   'photo': await MultipartFile.fromFile(
-  //     file.path, 
-  //     filename: photoname,
-  //     contentType: new MediaType("image", "png"),
-  //     ),
-  //   'student':jsonEncode(<String, dynamic>{
-  //     'registration_no': registrationNo,
-  //     'batch': batch,
-  //     'is_CR': isCR,
-  //   }),
-  //   'teacher': jsonEncode(<String, dynamic>{
-  //     'email': email,
-  //   }),
   
-  // };
-
-  final student = FormData.fromMap({
+ var formData = jsonEncode(<String, dynamic>{
+      'name': name,
+      'username': username,
+      'password': password,
+      'is_student': isStudent,
+      'is_teacher': isTeacher,
+      'faculty': faculty,
+      // 'photo': photodata,
+      'student':{
+        'registration_no': registrationNo,
+        'batch': batch,
+        'is_CR': isCR,
+      },
+      'teacher': {
+        'email': email,
+      },
       'registration_no': registrationNo,
       'batch': batch,
       'is_CR': isCR,
-    });
-  
-
-  final teacher =FormData.fromMap({
-    'email': email,
-  });
-
-
-// print(data);
-// var formData = FormData.fromMap( data );
-
-
-
-var formData = FormData.fromMap( {
-    "name": name,
-    'username': username,
-    'password': password,
-    'is_student': isStudent,
-    'is_teacher': isTeacher,
-    'faculty': faculty,
-    'photo': await MultipartFile.fromFile(
-      file.path, 
-      filename: photoname,
-      contentType: new MediaType("image", "png"),
-      ),
-      'student' : student,
-      'teacher' : teacher,
-    // 'student':FormData.fromMap({
-    //   'registration_no': registrationNo,
-    //   'batch': batch,
-    //   'is_CR': isCR,
-    // }),
-    // 'teacher': FormData.fromMap({
-    //   'email': email,
-    // }),
-});
-
-print(formData.toString());
-print(formData);
-
- var teach = jsonEncode({
-      'email': email,
-    });
-    print(teacher);
-    print(teach);
-
-print('Happening2');
-// print(formData.toString());
-try {final response = await dio.post(url, data: formData,);
-print("Success");
-print (response.data);
-}
-on DioError catch (e) {
-  if (e.response != null) {
-    print(e.response.data);
-    print(e.response.headers);
-    print("From if");
-    // print(e.response.request);
-  } else {
-    // Something happened in setting up or sending the request that triggered an Error
-    // print(e.request);
-    print(e.message);
-    print("From else");
-  }
-  print("Extra");
-  print(e.toString());
-  
-  
-  }
-print('Happening3');
-// print(response.data.toString());
-
-
-
-
-  // var url = Uri.parse('http://192.168.100.161:8000');
-  // var client = http.Client();
-  // final response1 = await client.post(
-  //   Uri.parse('$url/register/'),
-  //   headers: <String, String>{
-  //     'Content-Type': 'application/json; charset=UTF-8',
-  //   },
-  //   body: jsonEncode(<String, dynamic>{
-  //     'name': name,
-  //     'username': username,
-  //     'password': password,
-  //     'is_student': isStudent,
-  //     'is_teacher': isTeacher,
-  //     'faculty': faculty,
-  //     // 'photo': photodata,
-  //     'student':{
-  //       'registration_no': registrationNo,
-  //       'batch': batch,
-  //       'is_CR': isCR,
-  //     },
-  //     'teacher': {
-  //       'email': email,
-  //     },
-  //     'registration_no': registrationNo,
-  //     'batch': batch,
-  //     'is_CR': isCR,
-  //     'email': email, 
+      'email': email, 
       
-  //   }),
-  // );
-  //HERE
-  // print(response.statusMessage);
-  // print(response.statusMessage);
-  // if (response.statusCode == 200) {
-  //   print(response.data.toString());
-  //   return RegisterUsers.fromJson(jsonDecode(response.data));
-  // }
+    });
 
-  // else{
-  //   // print(response.data);
-  //   print(response.data.toString());
-  //   print('Unable to register User.');
-  // }
+// print(formData.toString());
+  // try {
+    response = await dio.post(url, data: formData,);
+    print('Happening3');
+    print(response.statusMessage);
+    if (response.statusCode == 200) {
+      print("Success");
+      print(response.data);
+      print(response.data.toString());
+      print(response.data['user']['id']);
+      var newurl = 'http://192.168.100.161:8000/upload_photo/';
+      var photourl = newurl + response.data['user']['id'].toString();
+      var formData = FormData.fromMap( {
+        'photo': await MultipartFile.fromFile(
+        file.path, 
+        filename: photoname,
+        // contentType: new MediaType("image", "???"),
+      ),
+     });
+
+     try {
+       final responsePhoto = await dio.patch(photourl, data: formData,);
+        print(responsePhoto.statusMessage);
+        if (responsePhoto.statusCode == 200) {
+          print("Photo Updated Successfully");
+          print(responsePhoto.data);
+        }
+      } on DioError catch (e) {
+         if (e.response != null) {
+            print(e.response.data);
+            print(e.response.headers);
+            
+          } 
+          else {
+              print(e.message);
+          }
+
+      return RegisterUsers.fromJson(jsonDecode(response.data));
+      }
+    }
+    else{
+      print(response.data.toString());
+      print('Unable to register User.');
+    }
+
   return null;
 }
+
+
+  
 
 class Register2 extends StatefulWidget {
   @override
@@ -374,16 +281,55 @@ final TextEditingController _password2controller = TextEditingController();
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
+                margin: EdgeInsets.fromLTRB(32, 0, 32, 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey,),
+                  borderRadius: BorderRadius.circular(4),
+                ),
                 // color: const Color(0xFFFCD5DD),
-                  child: FloatingActionButton(
-                  onPressed: () async {
-                    ImagePicker picker  = ImagePicker();
-                    final xfile = await picker.pickImage(source: ImageSource.gallery,imageQuality: 50, maxHeight: 500, maxWidth: 500);
-                    file = File(xfile.path);
-                    print(file);
-                    print("Here");
-                  })
+                     child:Row (
+                       mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                       children: [
+                        SizedBox(width:13),
+                        Icon(
+                          Icons.camera_alt_outlined,
+                          color: Colors.grey[600],
+                          size: 25,
+
+                        ),
+                        SizedBox(width:10),
+                        Center(
+                          child: Text(
+                            "Upload your photo here",
+                            style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 16,
+                            ),
+                          ),
+                          ),
+                        Spacer(),
+                        FloatingActionButton(
+                        mini: true,
+                        backgroundColor: const Color(0xFF51C4D3),
+                        foregroundColor: Colors.black,
+                        // hoverColor: Colors.cyan,
+                        child: Icon(
+                          Icons.add,
+                          size: 30,
+                          
+
+                        ),
+                        onPressed: () async {
+                        ImagePicker picker  = ImagePicker();
+                        final xfile = await picker.pickImage(source: ImageSource.gallery,imageQuality: 50, maxHeight: 500, maxWidth: 500);
+                        file = File(xfile.path);
+                        }),
+                        Spacer()
+                        ]
+                        
+                  )
+                  
                     
                 )   
               )
@@ -417,14 +363,11 @@ final TextEditingController _password2controller = TextEditingController();
                         _passwordcontroller.text,
                         file
                         );
-                        print(file);
-                        print("While passing");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
                               Login()));
-                                          // Navigator.pushNamed(context, '/
                     }
                     
                   },
