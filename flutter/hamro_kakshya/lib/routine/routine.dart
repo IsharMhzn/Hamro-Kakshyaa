@@ -71,7 +71,16 @@ class RoutineList extends StatelessWidget {
         itemBuilder: (context, index) {
           return Container(
             alignment: Alignment.center,
-            child: Text(classes[index].time),
+            child: Column(
+              children: [
+                Text(classes[index].time),
+                Text(classes[index].subjectTeacher),
+                Text(classes[index].subjectcode.code),
+                Text(classes[index].classcode.code),
+                Text(classes[index].room_no),
+                Text(classes[index].link),
+              ],
+            ),
             decoration: BoxDecoration(
                 color: Colors.amber, borderRadius: BorderRadius.circular(15)),
           );

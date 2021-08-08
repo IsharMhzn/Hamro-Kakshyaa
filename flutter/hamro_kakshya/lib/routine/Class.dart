@@ -7,9 +7,10 @@ import 'package:hamro_kakshya/subject/classcode.dart';
 
 class RoutineClass {
   final String subjectTeacher, room_no, link, days;
+  List<String> Days = [];
   final ClassCode classcode;
   final SubjectCode subjectcode;
-  final String time;
+  String time;
 
   RoutineClass(
       {this.subjectTeacher,
@@ -19,11 +20,11 @@ class RoutineClass {
       this.subjectcode,
       this.days,
       this.time}) {
-    // int hour, min;
-    // String t;
-    // List<String> vals = time.split('-');
-    // hour = int.parse(vals[0]);
-    // min = int.parse(vals[1]);
+    int hour, min;
+    String t;
+    List<String> vals = time.split('-');
+    hour = int.parse(vals[0]);
+    min = int.parse(vals[1]);
 
     // if (hour > 12) {
     //   hour -= 12;
@@ -32,8 +33,22 @@ class RoutineClass {
     //   t = 'AM';
     // }
 
-    // this.time = '$hour:$min $t';
-    // print(this.time);
+    this.time = '$hour:$min';
+    print(this.time);
+    List<String> day = days.split('-');
+    print("This is time");
+    print(this.time);
+    print(this.days);
+    print("Printing days");
+    print(day);
+    print(Days);
+
+    for (int i = 0; i < day.length; i++) {
+      print(day[i]);
+      Days.add(day[i]);
+    }
+    print("Days below");
+    print(Days);
   }
   factory RoutineClass.fromJson(Map<String, dynamic> json) {
     return RoutineClass(
@@ -54,7 +69,7 @@ class RoutineClass {
       'classcode': this.classcode.toJson(),
       'link': this.link,
       'time': this.time,
-      'days': this.time,
+      'days': this.days,
     });
   }
 }
