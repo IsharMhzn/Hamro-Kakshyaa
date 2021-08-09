@@ -4,6 +4,7 @@ import 'routinepage.dart';
 import 'package:http/http.dart' as http;
 import './Class.dart';
 import './routineform.dart';
+import 'package:intl/intl.dart';
 
 class RoutineSec extends StatefulWidget {
   @override
@@ -79,6 +80,7 @@ class _RoutineListState extends State<RoutineList> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    String now = DateFormat("yyyy-MM-dd \n \t hh:mm").format(DateTime.now());
     return Container(
       child: Column(
         children: [
@@ -90,6 +92,7 @@ class _RoutineListState extends State<RoutineList> {
                   bottomLeft: Radius.circular(35),
                   bottomRight: Radius.circular(35),
                 )),
+            child: Text('$now'),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
