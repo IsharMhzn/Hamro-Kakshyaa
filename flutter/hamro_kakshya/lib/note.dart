@@ -23,7 +23,7 @@ Future<List<NotesClass>> fetchNotes() async {
 
   if (response.statusCode == 200) {
     List notes = jsonDecode(response.body).cast<Map<String, dynamic>>();
-    print(notes);
+    // print(notes);
     return notes.map((json) => NotesClass.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load Notice');

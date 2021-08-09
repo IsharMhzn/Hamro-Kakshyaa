@@ -21,7 +21,7 @@ class ListNotes(generics.ListCreateAPIView):
     permission_class = [IsAuthenticated, ]
     queryset =  models.Notes.objects.all()
     # filter_backends = [DjangoFilterBackend]
-    # authentication_class = UseJWTAuthentication
+    authentication_class = UseJWTAuthentication
 
     def get_queryset(self):
         # user = self.request.user
