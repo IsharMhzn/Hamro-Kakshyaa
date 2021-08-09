@@ -26,9 +26,9 @@ Widget routineCardGenerator(lecture) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Code: ${lecture.subj}',
+              Text('Code: ${lecture.subjectcode.code}',
                   style: TextStyle(color: Colors.black, fontSize: 16)),
-              Text('Time: ${lecture.t.hour}:${lecture.t.min}',
+              Text('Time: ${lecture.time}',
                   style: TextStyle(color: Colors.black, fontSize: 16)),
             ],
           ),
@@ -39,9 +39,9 @@ Widget routineCardGenerator(lecture) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('${lecture.type} class',
+              Text('Physical class',
                   style: TextStyle(color: Colors.black, fontSize: 16)),
-              Text('${lecture.place}',
+              Text('${lecture.room_no}',
                   style: TextStyle(color: Colors.black, fontSize: 16)),
             ],
           )

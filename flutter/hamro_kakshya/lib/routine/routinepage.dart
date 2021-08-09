@@ -107,7 +107,7 @@
 //               primary: const Color(0xFF126E82), // background
 //               onSurface: Colors.yellow,
 //               onPrimary: Colors.white, // foreground
-//             ), 
+//             ),
 //             onPressed: () {
 //               Navigator.push(context,
 //                   MaterialPageRoute(builder: (context) => (UpcomingClass())));
@@ -207,15 +207,13 @@
 //         debugShowCheckedModeBanner: false,
 //         home: Scaffold(
 //             // backgroundColor: const Color(0xffe1f6f7),
-//             appBar: AppBar(
-//               backgroundColor: const Color(0xFF51C4D3),
-//               actions: [
+//             appBar: AppBar(backgroundColor: const Color(0xFF51C4D3), actions: [
 //               ElevatedButton(
-//                 style: ElevatedButton.styleFrom(
-//                   primary: const Color(0xFF126E82), // background
-//                   onSurface: Colors.yellow,
-//                   onPrimary: Colors.white, // foreground
-//                 ), 
+//                   style: ElevatedButton.styleFrom(
+//                     primary: const Color(0xFF126E82), // background
+//                     onSurface: Colors.yellow,
+//                     onPrimary: Colors.white, // foreground
+//                   ),
 //                   onPressed: () {
 //                     Navigator.pop(context);
 //                   },

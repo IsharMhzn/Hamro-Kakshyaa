@@ -5,6 +5,47 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:hamro_kakshya/subject/classcode.dart';
 
+class realClass {
+  final String subjectTeacher, room_no, link, day, time;
+  final ClassCode classcode;
+  final SubjectCode subjectcode;
+
+  realClass(
+      {this.subjectTeacher,
+      this.room_no,
+      this.classcode,
+      this.link,
+      this.subjectcode,
+      this.day,
+      this.time}) {}
+}
+
+Map<String, List> reaarangeclass(List<RoutineClass> r_list) {
+  Map<String, List> rc_map = {};
+  for (int i = 0; i < r_list.length; i++) {
+    RoutineClass r_obj = r_list[i];
+    List days = r_list[i].Days;
+    for (int j = 0; j < days.length; j++) {
+      var day = days[j].toLowerCase();
+      realClass rc = realClass(
+          subjectTeacher: r_obj.subjectTeacher,
+          room_no: r_obj.room_no,
+          classcode: r_obj.classcode,
+          link: r_obj.link,
+          subjectcode: r_obj.subjectcode,
+          day: r_obj.days,
+          time: r_obj.time);
+      if (rc_map.containsKey(day)) {
+        rc_map[day].add(rc);
+      } else {
+        rc_map[day] = [rc];
+      }
+    }
+  }
+  print(rc_map);
+  return rc_map;
+}
+
 class RoutineClass {
   final String subjectTeacher, room_no, link, days;
   List<String> Days = [];
@@ -20,12 +61,6 @@ class RoutineClass {
       this.subjectcode,
       this.days,
       this.time}) {
-    int hour, min;
-    String t;
-    List<String> vals = time.split('-');
-    hour = int.parse(vals[0]);
-    min = int.parse(vals[1]);
-
     // if (hour > 12) {
     //   hour -= 12;
     //   t = 'PM';
@@ -33,22 +68,21 @@ class RoutineClass {
     //   t = 'AM';
     // }
 
-    this.time = '$hour:$min';
-    print(this.time);
+    // print(this.time);
     List<String> day = days.split('-');
-    print("This is time");
-    print(this.time);
-    print(this.days);
-    print("Printing days");
-    print(day);
-    print(Days);
+    // print("This is time");s
+    // print(this.time);
+    // print(this.days);
+    // print("Printing days");
+    // print(day);
+    // print(Days);
 
     for (int i = 0; i < day.length; i++) {
       print(day[i]);
       Days.add(day[i]);
     }
-    print("Days below");
-    print(Days);
+    // print("Days below");
+    // print(Days);
   }
   factory RoutineClass.fromJson(Map<String, dynamic> json) {
     return RoutineClass(
@@ -74,14 +108,14 @@ class RoutineClass {
   }
 }
 
-Future<List<RoutineClass>> fetchNotices(
+Future<Map<String, List>> fetchNotices(
   http.Client client,
 ) async {
   final response =
       await client.get(Uri.parse('http://192.168.254.9:8000/classRoutine/'));
 
   if (response.statusCode == 200) {
-    return parseNotices(response.body);
+    return reaarangeclass(parseNotices(response.body));
   } else {
     throw Exception('Failed to load routine');
   }

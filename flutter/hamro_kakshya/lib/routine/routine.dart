@@ -11,7 +11,7 @@ class RoutineSec extends StatefulWidget {
 }
 
 class _RoutineSecState extends State<RoutineSec> {
-  Future<List<RoutineClass>> futureRoutine;
+  Future<Map<String, List>> futureRoutine;
 
   @override
   void initState() {
@@ -55,39 +55,126 @@ class _RoutineSecState extends State<RoutineSec> {
   }
 }
 
-class RoutineList extends StatelessWidget {
-  final List<RoutineClass> classes;
+class RoutineList extends StatefulWidget {
+  final Map<String, List> classes;
+
   RoutineList({this.classes});
 
   @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        itemCount: classes.length,
-        itemBuilder: (context, index) {
-          return Container(
-            alignment: Alignment.center,
-            child: Column(
-              children: [
-                Text(classes[index].time),
-                Text(classes[index].subjectTeacher),
-                Text(classes[index].subjectcode.code),
-                Text(classes[index].classcode.code),
-                Text(classes[index].room_no),
-                Text(classes[index].link),
-              ],
-            ),
-            decoration: BoxDecoration(
-                color: Colors.amber, borderRadius: BorderRadius.circular(15)),
-          );
-        });
-  }
+  _RoutineListState createState() => _RoutineListState();
 }
 
+class _RoutineListState extends State<RoutineList> {
+  List curr_classes;
+  String currDay;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currDay = 'sun';
+    curr_classes = widget.classes[currDay];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            height: 60,
+            decoration: BoxDecoration(
+                color: Color(0xff5BD7E8),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(35),
+                  bottomRight: Radius.circular(35),
+                )),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  daycardbutton("Sun"),
+                  daycardbutton("Mon"),
+                  daycardbutton("Tue")
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  daycardbutton("Wed"),
+                  daycardbutton("Thur"),
+                  daycardbutton("Fri"),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 25,
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.fromLTRB(10, 25, 10, 25),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+              ),
+              child: Column(
+                  children: curr_classes
+                      .map((lecture) => routineCardGenerator(lecture))
+                      .toList()),
+            ),
+          ),
+          ElevatedButton(
+            child: Text('Upcoming Class'),
+            style: ElevatedButton.styleFrom(
+              primary: const Color(0xFF126E82), // background
+              onSurface: Colors.yellow,
+              onPrimary: Colors.white, // foreground
+            ),
+            // onPressed: () {
+            //   Navigator.push(context,
+            //       MaterialPageRoute(builder: (context) => (UpcomingClass())));
+            // },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget daycardbutton(String date) {
+    bool today = date.toLowerCase() == currDay;
+    return Container(
+      height: 80,
+      width: 80,
+      child: Card(
+        color: today ? Colors.lightBlue[300] : Colors.lightBlue[100],
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              currDay = date.toLowerCase();
+              curr_classes = widget.classes[currDay];
+            });
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(date),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 
 
