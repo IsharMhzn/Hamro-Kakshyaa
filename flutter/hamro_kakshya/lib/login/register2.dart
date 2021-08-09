@@ -247,7 +247,7 @@ final TextEditingController _password2controller = TextEditingController();
                     obscureText: true,
                     decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.security),
+                    prefixIcon: Icon(Icons.lock_outlined),
                     labelText: 'Password',
                     ),
                 )   
@@ -268,7 +268,7 @@ final TextEditingController _password2controller = TextEditingController();
                     obscureText: true,
                     decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.security_sharp),
+                    prefixIcon: Icon(Icons.lock_outlined),
                     labelText: 'Confirm Password',
                     ),
                 )   
@@ -311,6 +311,7 @@ final TextEditingController _password2controller = TextEditingController();
                         Spacer(),
                         FloatingActionButton(
                         mini: true,
+                        tooltip: "Add Photo",
                         backgroundColor: const Color(0xFF51C4D3),
                         foregroundColor: Colors.black,
                         // hoverColor: Colors.cyan,

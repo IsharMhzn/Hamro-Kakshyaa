@@ -17,11 +17,13 @@ void main() {
 
 class NavBar extends StatelessWidget {
   @override
+  String jwt;
+  NavBar({this.jwt});
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-          appBar: MyAppBar(),
+          appBar: AppBarProfile(jwt: jwt),
           bottomNavigationBar: new Material(
             color: const Color(0xFF126E82),
             child: TabBar(
@@ -29,11 +31,11 @@ class NavBar extends StatelessWidget {
                 unselectedLabelColor: const Color(0xFFD8E3E7),
                 indicatorColor: const Color(0xFF51C4D3),
                 tabs: [
-                  Tab(icon: Icon(Icons.home)),
-                  Tab(icon: Icon(Icons.notifications_active)),
-                  Tab(icon: Icon(Icons.book_outlined)),
-                  Tab(icon: Icon(Icons.school)),
-                  Tab(icon: Icon(Icons.person)),
+                  Tab(icon: Icon(Icons.home,semanticLabel: "Home",)),
+                  Tab(icon: Icon(Icons.notifications_active, semanticLabel: "Notice",)),
+                  Tab(icon: Icon(Icons.book_outlined, semanticLabel: "Note",)),
+                  Tab(icon: Icon(Icons.school,semanticLabel: "Routine",)),
+                  Tab(icon: Icon(Icons.person, semanticLabel: "Profile",)),
                 ]),
           ),
           body: TabBarView(

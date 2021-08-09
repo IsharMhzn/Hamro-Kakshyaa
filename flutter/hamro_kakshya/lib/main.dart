@@ -23,7 +23,7 @@ void main() {
         '/register1': (context) => Register1(),
         '/register2': (conetxt) => Register2(),
         '/login': (context) => Login(),
-        '/logout': (context) => MyAppBar(),
+        '/logout': (context) => AppBarProfile(),
         // '/home': (context) => Home(),
       }));
 }
@@ -40,6 +40,6 @@ class Home extends StatelessWidget {
   final Map<String, dynamic> payload;
   @override
   Widget build(BuildContext context) {
-    return NavBar();
+    return NavBar(jwt: jwt);
   }
 }
