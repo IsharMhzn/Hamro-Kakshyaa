@@ -47,7 +47,7 @@ Future<Student> fetchStudent(http.Client client, String jwt) async {
 
   var bearer_token = json.decode(jwt)["access"];
   var id = json.decode(jwt)["id"];
-  var url = "http://192.168.100.161:8000/student/${id}";
+  var url = "http://192.168.1.74:8000/student/${id}";
 
   final response = await client
       .get(Uri.parse(url), headers: {"Authorization": "Bearer $bearer_token"});
@@ -102,7 +102,7 @@ Future<List<NotesClass>> fetchownNotes(String jwt) async {
   print("recevied own notes");
 
   if (response.statusCode == 200) {
-    print(response.body);
+    // print(response.body);
     List notes = jsonDecode(response.body).cast<Map<String, dynamic>>();
     return notes.map((json) => NotesClass.fromJson(json)).toList();
   } else {

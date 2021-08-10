@@ -57,6 +57,7 @@ class _NoticeState extends State<Notice> {
           },
         ),
         floatingActionButton: FloatingActionButton(
+          heroTag: "notice",
           onPressed: () {
             print("Notice post button pressed");
             Navigator.push(

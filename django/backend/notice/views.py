@@ -67,6 +67,8 @@ class NoticeList(generics.ListAPIView):
 
 class NoticeCreate(generics.CreateAPIView):
     serializer_class = NoticeCreateSerializer
+    permission_class = [permissions.IsAuthenticated, ]
+    authentication_class = UseJWTAuthentication
     print("I n Notice")
         
 class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):

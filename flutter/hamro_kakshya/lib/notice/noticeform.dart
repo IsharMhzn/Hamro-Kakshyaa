@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:hamro_kakshya/main.dart';
 import 'package:hamro_kakshya/notice/noticeclass.dart';
 import 'package:hamro_kakshya/subject/classcode.dart';
 import 'package:hamro_kakshya/subject/subjectcode.dart';
@@ -10,6 +13,12 @@ void main(List<String> args) {
 }
 
 class NoticeForm extends StatefulWidget {
+  String jwt;
+
+  NoticeForm() {
+    storage.read(key: "jwt").then((value) => jwt = value);
+  }
+
   @override
   _NoticeFormState createState() => _NoticeFormState();
 }
@@ -199,15 +208,19 @@ class _NoticeFormState extends State<NoticeForm> {
                                 batch: '2018',
                                 code: classcode);
 
-                            NoticeClass notice = NoticeClass(
+                            var user_id = json.decode(widget.jwt)["id"];
+
+                            NoticeCreateClass notice = NoticeCreateClass(
                                 title: title,
                                 description: description,
                                 subjectcode: subject,
-                                classcode: class_code);
+                                classcode: class_code,
+                                author: user_id);
 
-                            Future<NoticeClass> fnotice = createNotice(notice);
+                            Future<NoticeCreateClass> fnotice =
+                                createNotice(notice, widget.jwt);
 
-                            if (fnotice is Future<NoticeClass>) {
+                            if (fnotice is Future<NoticeCreateClass>) {
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

@@ -33,9 +33,9 @@ class ListNotes(generics.ListCreateAPIView):
             classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
             print(classcode)
 
-            return models.Notes.objects.filter(classcode = classcode)
+            return models.Notes.objects.filter(classcode = classcode)[::-1]
         else:
-            return models.Notes.objects.filter(author=user)
+            return models.Notes.objects.filter(author=user)[::-1]
      
     # filterset_fields = ['title']
     # def get_queryset(self):

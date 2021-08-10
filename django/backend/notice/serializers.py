@@ -26,10 +26,10 @@ class NoticeCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Notice
-        fields = 'title', 'description', 'classcode', 'subjectcode'
+        fields = 'title', 'description', 'classcode', 'subjectcode', 'author'
 
     def get_object(self, validated_data, type):
-        print("I n get_obje")
+        # print("I n get_obje")
         code = validated_data.get(type).get('code').strip()
         code = ''.join((l.upper() for l in code.split()))
         validated_data.pop(type)
@@ -48,7 +48,7 @@ class NoticeCreateSerializer(serializers.ModelSerializer):
         return obj, validated_data
 
     def create(self, validated_data):
-        print("In create_obje")
+        # print("In create_obje")
         c_code, validated_data = self.get_object(validated_data, 'classcode')
         s_code, validated_data = self.get_object(validated_data, 'subjectcode')
 
