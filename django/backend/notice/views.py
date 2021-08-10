@@ -21,10 +21,10 @@ def filterNotice(user, size = None):
     elif user.is_teacher:
         objects = Notice.objects.filter(author=user)
 
-        classcode = self.request.query_params.get('classcode')
-        if classcode is not None:
-            classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
-            objects = objects.filter(classcode=classcode)
+        # classcode = self.request.query_params.get('classcode')
+        # if classcode is not None:
+        #     classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
+        #     objects = objects.filter(classcode=classcode)
     
     objects = objects[::-1]
 

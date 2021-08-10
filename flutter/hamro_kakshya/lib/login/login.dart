@@ -25,6 +25,8 @@ Future<String> performLogin(String username, String password) async {
       'password': password,
     }),
   );
+
+  // await Future.delayed(Duration(seconds: 5));
   if (response.statusCode == 200) {
     // print(response.body);
     return (response.body);
@@ -61,6 +63,13 @@ class _LoginState extends State<Login> {
   String jwt;
 
   // Future<LoginClass> _futureLogin;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    jwt = '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +134,9 @@ class _LoginState extends State<Login> {
                                 margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
                                 child: TextField(
                                   controller: _usernamecontroller,
+                                  // onChanged: (_) {
+                                  //   setState(() {});
+                                  // },
                                   obscureText: false,
                                   decoration: InputDecoration(
                                       border: OutlineInputBorder(),
@@ -142,6 +154,9 @@ class _LoginState extends State<Login> {
                             child: Container(
                                 margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
                                 child: TextField(
+                                  // onChanged: (_) {
+                                  //   setState(() {});
+                                  // },
                                   controller: _passwordcontroller,
                                   obscureText: true,
                                   decoration: InputDecoration(
@@ -170,7 +185,8 @@ class _LoginState extends State<Login> {
                                       color: const Color(0xFF126E82),
                                       borderRadius: BorderRadius.circular(20)),
                                   child: new TextButton(
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        // setstate() {}
                                         if (_usernamecontroller.text != '' &&
                                             _passwordcontroller.text != '') {
                                           setState(() {
@@ -181,26 +197,30 @@ class _LoginState extends State<Login> {
                                               .then((value) {
                                             setState(() {
                                               // print(value);
+                                              print("inside setstae");
                                               jwt = value;
+                                              if (jwt != null) {
+                                                storage.write(
+                                                    key: "jwt", value: jwt);
+                                                print("saving jwt...");
+                                                print(
+                                                    "for id ${json.decode(jwt)["id"]}");
+                                                // CircularProgressIndicator();
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            Home.fromBase64(
+                                                                jwt)));
+                                                // Navigator.pushNamed(context, '/home');
+                                                // Navigator.pop(context);
+                                              }
                                             });
                                           });
+                                          print("outside setstate");
 
                                           // print(jwt);
-                                          if (jwt != null) {
-                                            storage.write(
-                                                key: "jwt", value: jwt);
-                                            print("saving jwt...");
-                                            print(
-                                                "for id ${json.decode(jwt)["id"]}");
-                                            CircularProgressIndicator();
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Home.fromBase64(jwt)));
-                                            // Navigator.pushNamed(context, '/home');
-                                            // Navigator.pop(context);
-                                          }
+
                                         } else {
                                           setState(() {
                                             fieldError =
