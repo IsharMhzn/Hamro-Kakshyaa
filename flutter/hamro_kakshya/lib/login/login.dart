@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:hamro_kakshya/main.dart';
+
 void main() {
   runApp(Login());
 }
 
-Future<LoginClass> performLogin(String username, String password) async{
-  var url = Uri.parse('http://127.0.0.1:8000/login/');
-  final response = await http.post(
-    url,
+Future<String> performLogin(String username, String password) async {
+  print("loggin in...");
+  var url = Uri.parse('http://192.168.1.74:8000');
+  var client = http.Client();
+  final response = await client.post(
+    Uri.parse('$url/login/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -20,14 +25,15 @@ Future<LoginClass> performLogin(String username, String password) async{
       'password': password,
     }),
   );
-    if (response.statusCode == 201) {
-      return LoginClass.fromJson(jsonDecode(response.body));
-  } else {
-      throw Exception('Failed to login the user.');
+  if (response.statusCode == 200) {
+    // print(response.body);
+    return (response.body);
+    // return LoginClass.fromJson(jsonDecode(response.body));
   }
-} 
+  return null;
+}
 
-class LoginClass{
+class LoginClass {
   final String username;
   final String password;
 
@@ -47,9 +53,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final TextEditingController _controller = TextEditingController();
-  Future<LoginClass> _futureLogin;
+  final TextEditingController _usernamecontroller = TextEditingController();
+  final TextEditingController _passwordcontroller = TextEditingController();
 
+  String jwt;
+
+  Future<LoginClass> _futureLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -63,17 +72,16 @@ class _LoginState extends State<Login> {
                 child: new Container(
                     margin: EdgeInsets.all(15),
                     color: const Color(0xFFD8E3E7),
-                    child: new Column(children: <Widget>[
+                    // child: new Expanded(
+                    child: Column(children: <Widget>[
                       new Spacer(),
                       new Flexible(
                         flex: 1,
                         child: new FractionallySizedBox(
                             widthFactor: 1,
                             // heightFactor: 1,
+                            // child: new Expanded(
                             child: Container(
-                                // margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                                // color: const Color(0xFFFCD5DD),
-                                // child: Center(
                                 child: Text(
                               "Login to",
                               textAlign: TextAlign.center,
@@ -90,10 +98,8 @@ class _LoginState extends State<Login> {
                           child: new FractionallySizedBox(
                               widthFactor: 1,
                               heightFactor: 1,
+                              // child: new Expanded(
                               child: Container(
-                                // margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                // color: const Color(0xFFFCD5DD),
-                                // child: Center(
                                 child: Text(
                                   "Hamro Kakshyaa",
                                   textAlign: TextAlign.center,
@@ -112,10 +118,11 @@ class _LoginState extends State<Login> {
                         child: new FractionallySizedBox(
                             widthFactor: 1,
                             heightFactor: 1,
+                            // child: new Expanded(
                             child: Container(
                                 margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
-                                // color: const Color(0xFFFCD5DD),
                                 child: TextField(
+                                  controller: _usernamecontroller,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
@@ -128,11 +135,11 @@ class _LoginState extends State<Login> {
                         child: new FractionallySizedBox(
                             widthFactor: 1,
                             heightFactor: 1,
+                            // child: new Expanded(
                             child: Container(
                                 margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
-                                // color: const Color(0xFFFCD5DD),
-
                                 child: TextField(
+                                  controller: _passwordcontroller,
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
@@ -146,6 +153,7 @@ class _LoginState extends State<Login> {
                           child: new FractionallySizedBox(
                               widthFactor: 1,
                               // heightFactor: 1,
+                              // child: new Expanded(
                               child: Container(
                                   margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
                                   decoration: BoxDecoration(
@@ -153,8 +161,30 @@ class _LoginState extends State<Login> {
                                       borderRadius: BorderRadius.circular(20)),
                                   child: new TextButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(context, '/home');
-                                        // Navigator.pop(context);
+                                        // _futureLogin = performLogin(_usernamecontroller.text,_passwordcontroller.text);
+                                        performLogin(_usernamecontroller.text,
+                                                _passwordcontroller.text)
+                                            .then((value) {
+                                          setState(() {
+                                            // print(value);
+                                            jwt = value;
+                                          });
+                                        });
+
+                                        // print(jwt);
+                                        if (jwt != null) {
+                                          storage.write(key: "jwt", value: jwt);
+                                          print("saving jwt...");
+                                          print(
+                                              "for id ${json.decode(jwt)["id"]}");
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Home.fromBase64(jwt)));
+                                          // Navigator.pushNamed(context, '/home');
+                                          // Navigator.pop(context);
+                                        }
                                       },
                                       child: Text(
                                         "Login",
@@ -167,5 +197,21 @@ class _LoginState extends State<Login> {
                       new Spacer(),
                     ])))));
   }
-}
 
+  // FutureBuilder<LoginClass> buildFutureBuilder() {
+  //     return FutureBuilder<LoginClass>(
+  //       future: _futureLogin,
+  //       builder: (context, snapshot) {
+  //         if (snapshot.hasData) {
+  //           return Text(snapshot.data.username);
+  //         } else if (snapshot.hasError) {
+  //           return Text('${snapshot.error}');
+  //         }
+
+  //         return CircularProgressIndicator();
+  //       },
+  //     );
+  //   }
+  // }
+
+}

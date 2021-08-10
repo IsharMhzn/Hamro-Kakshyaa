@@ -6,7 +6,7 @@ class SubjectCode {
   SubjectCode({this.code, this.name});
 
   factory SubjectCode.fromJson(Map<String, dynamic> json) {
-    print(json);
+    // print(json);
     return SubjectCode(code: json['code'], name: json['name']);
   }
 

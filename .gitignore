@@ -46,3 +46,4 @@ Thumbs.db
 .vscode
 *.pyc
 django/backend/media/photos
+flutter/hamro_kakshya/assets/env

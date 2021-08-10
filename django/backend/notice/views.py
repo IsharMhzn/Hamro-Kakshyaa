@@ -3,32 +3,38 @@ from .serializers import NoticeSerializer, NoticeCreateSerializer
 
 from user.models import User
 from subject.models import ClassCode
+from user.views import UseJWTAuthentication
 
 from rest_framework import generics
+from rest_framework import permissions
 
 class NoticeList(generics.ListAPIView):
     serializer_class = NoticeSerializer
+    permission_class = [permissions.IsAuthenticated, ]
+    authentication_class = UseJWTAuthentication
 
     def get_queryset(self):
         ''' filtering objects with respect to user and query parameters '''
 
-        # user = self.request.user
-        user = User.objects.all()
-        # if user.is_student:
-        #     faculty = user.faculty
-        #     batch = user.student.batch
+        user = self.request.user
 
-        #     classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
-        #     print(classcode)
-        #     objects = Notice.objects.filter(classcode=classcode)
-        #     # objects = Notice.objects.filter(classcode="CS18")
-        # elif user.is_teacher:
-        #     objects = Notice.objects.filter(author=user)
+        # if user.is_authenticated:
+        #     # user = User.objects.first()
+        if user.is_student:
+            faculty = user.faculty
+            batch = user.student.batch
 
-        #     classcode = self.request.query_params.get('classcode')
-        #     if classcode is not None:
-        #         classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
-        #         objects = objects.filter(classcode=classcode)
+            classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
+            print(classcode)
+            objects = Notice.objects.filter(classcode=classcode)
+            # objects = Notice.objects.filter(classcode="CS18")
+        elif user.is_teacher:
+            objects = Notice.objects.filter(author=user)
+
+            classcode = self.request.query_params.get('classcode')
+            if classcode is not None:
+                classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
+                objects = objects.filter(classcode=classcode)
         
         # subject = self.request.query_params.get('subject')
 

@@ -14,14 +14,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(
         children: [
-          noticeBlock(),
+          Expanded(child: noticeBlock()),
           Divider(
             color: Color(0xff126e82),
             indent: 60,
             endIndent: 60,
             thickness: 2,
           ),
-          routineBlock(),
+          Expanded(child: routineBlock()),
         ],
       ),
     );

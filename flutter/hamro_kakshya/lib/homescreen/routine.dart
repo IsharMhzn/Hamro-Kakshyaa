@@ -115,7 +115,8 @@ Widget routineBlock() {
 
   return Container(
       padding: EdgeInsets.all(5),
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
         children: [
           TextButton(
               onPressed: () {},
@@ -137,5 +138,5 @@ Widget routineBlock() {
                   .map((lecture) => routineCardGenerator2(lecture))
                   .toList())
         ],
-      ));
+      )));
 }
