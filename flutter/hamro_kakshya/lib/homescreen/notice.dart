@@ -18,6 +18,8 @@ class LatestNotice {
 Future<List<LatestNotice>> fetchLatestNotices(String jwt) async {
   print("Fetching latest notices");
 
+  Future.delayed(Duration(seconds: 1));
+
   String bearer_token = json.decode(jwt)['access'];
   print("Requesting url");
   var url = "http://192.168.1.74:8000/notice/latest/";

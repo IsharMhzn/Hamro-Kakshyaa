@@ -21,7 +21,15 @@ class realClass {
 }
 
 Map<String, List> reaarangeclass(List<RoutineClass> r_list) {
+  List<String> weekdays = ['sun', 'mon', 'tue', 'wed', 'thur', 'fri'];
   Map<String, List> rc_map = {};
+
+  for (String d in weekdays) {
+    rc_map[d] = [];
+  }
+
+  print(rc_map);
+
   for (int i = 0; i < r_list.length; i++) {
     RoutineClass r_obj = r_list[i];
     List days = r_list[i].Days;
@@ -35,11 +43,8 @@ Map<String, List> reaarangeclass(List<RoutineClass> r_list) {
           subjectcode: r_obj.subjectcode,
           day: r_obj.days,
           time: r_obj.time);
-      if (rc_map.containsKey(day)) {
-        rc_map[day].add(rc);
-      } else {
-        rc_map[day] = [rc];
-      }
+
+      rc_map[day].add(rc);
     }
   }
   print(rc_map);
@@ -112,7 +117,7 @@ Future<Map<String, List>> fetchNotices(
   http.Client client,
 ) async {
   final response =
-      await client.get(Uri.parse('http://192.168.254.10:8000/classRoutine/'));
+      await client.get(Uri.parse('http://192.168.1.74:8000/classRoutine/'));
 
   if (response.statusCode == 200) {
     return reaarangeclass(parseNotices(response.body));
@@ -131,7 +136,6 @@ List<RoutineClass> parseNotices(String responseBody) {
 }
 
 Future<RoutineClass> createRoutne(RoutineClass routine) async {
-
   final response = await http.post(
       Uri.parse('http://192.168.254.10:8000/classRoutine/create/'),
       headers: <String, String>{

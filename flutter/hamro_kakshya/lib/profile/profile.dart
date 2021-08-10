@@ -102,7 +102,7 @@ Future<List<NotesClass>> fetchownNotes(String jwt) async {
   print("recevied own notes");
 
   if (response.statusCode == 200) {
-    print(response.body);
+    // print(response.body);
     List notes = jsonDecode(response.body).cast<Map<String, dynamic>>();
     return notes.map((json) => NotesClass.fromJson(json)).toList();
   } else {

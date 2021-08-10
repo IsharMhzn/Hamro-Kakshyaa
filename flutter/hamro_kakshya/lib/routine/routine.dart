@@ -131,13 +131,16 @@ class _RoutineListState extends State<RoutineList> {
                 ),
               ),
               child: Column(
-                  children: curr_classes
-                      .map((lecture) => routineCardGenerator(lecture))
-                      .toList()),
+                  children: curr_classes != []
+                      ? curr_classes
+                          .map((lecture) => routineCardGenerator(lecture))
+                          .toList()
+                      : []),
             ),
           ),
           ElevatedButton(
             child: Text('Upcoming Class'),
+            onPressed: () {},
             style: ElevatedButton.styleFrom(
               primary: const Color(0xFF126E82), // background
               onSurface: Colors.yellow,
