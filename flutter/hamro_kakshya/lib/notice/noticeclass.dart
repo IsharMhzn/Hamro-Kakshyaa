@@ -5,11 +5,22 @@ import 'package:hamro_kakshya/subject/classcode.dart';
 import 'package:hamro_kakshya/subject/subjectcode.dart';
 import 'package:http/http.dart' as http;
 
+class User {
+  final String name, photo;
+
+  User({this.name, this.photo});
+
+  factory User.fromJson(json) {
+    return User(name: json['name'], photo: json['photo']);
+  }
+}
+
 class NoticeClass {
   final String title, description, date;
   final String time;
   final SubjectCode subjectcode;
   final ClassCode classcode;
+  final User author;
 
   NoticeClass(
       {this.title,
@@ -18,12 +29,13 @@ class NoticeClass {
       this.subjectcode,
       this.classcode,
       this.date,
-      this.time}) {
-    // int hour, min;
-    // String t;
-    // List<String> vals = time.split('-');
-    // hour = int.parse(vals[0]);
-    // min = int.parse(vals[1]);
+      this.time,
+      this.author}) {
+    int hour, min;
+    String t;
+    List<String> vals = time.split('-');
+    hour = int.parse(vals[0]);
+    min = int.parse(vals[1]);
 
     // if (hour > 12) {
     //   hour -= 12;
@@ -43,7 +55,8 @@ class NoticeClass {
         subjectcode: SubjectCode.fromJson(json['subjectcode']),
         classcode: ClassCode.fromJson(json['classcode']),
         date: json['date_posted'],
-        time: json['time_posted']);
+        time: json['time_posted'],
+        author: User.fromJson(json['author']));
   }
 
   Map<String, dynamic> toJson() {
@@ -88,7 +101,7 @@ List<NoticeClass> parseNotices(String responseBody) {
 }
 
 Future<NoticeClass> createNotice(NoticeClass notice) async {
-  var url = dotenv.env['HOST'];
+  var url = "http://192.168.1.74:8000";
   final response = await http.post(
     Uri.parse('$url/notice/create/'),
     headers: <String, String>{

@@ -13,7 +13,7 @@ void main() {
 
 Future<String> performLogin(String username, String password) async {
   print("loggin in...");
-  var url = Uri.parse('http://192.168.1.74:8000');
+  var url = Uri.parse('http://192.168.100.161:8000');
   var client = http.Client();
   final response = await client.post(
     Uri.parse('$url/login/'),
@@ -29,6 +29,9 @@ Future<String> performLogin(String username, String password) async {
     // print(response.body);
     return (response.body);
     // return LoginClass.fromJson(jsonDecode(response.body));
+  }
+  else{
+    print('Incorrect credentials.');
   }
   return null;
 }
@@ -55,10 +58,10 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _usernamecontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
-
+  String fieldError = '';
   String jwt;
 
-  Future<LoginClass> _futureLogin;
+  // Future<LoginClass> _futureLogin;
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +130,7 @@ class _LoginState extends State<Login> {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Username',
+                                    prefixIcon: Icon(Icons.person_outline_sharp)
                                   ),
                                 ))),
                       ),
@@ -144,10 +148,18 @@ class _LoginState extends State<Login> {
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     labelText: 'Password',
+                                    prefixIcon: Icon(Icons.lock_outlined)
                                   ),
                                 ))),
                       ),
-
+                      Center(
+                          child: Text(
+                        fieldError,
+                        style: TextStyle(color: Colors.red, fontSize: 15),
+                      )),
+                      SizedBox(
+                        height: 10,
+                      ),
                       new Flexible(
                           flex: 1,
                           child: new FractionallySizedBox(
@@ -161,7 +173,10 @@ class _LoginState extends State<Login> {
                                       borderRadius: BorderRadius.circular(20)),
                                   child: new TextButton(
                                       onPressed: () {
-                                        // _futureLogin = performLogin(_usernamecontroller.text,_passwordcontroller.text);
+                                      if (_usernamecontroller.text != '' && _passwordcontroller.text != '') {
+                                          setState(() {
+                                          fieldError = '';
+                                        });
                                         performLogin(_usernamecontroller.text,
                                                 _passwordcontroller.text)
                                             .then((value) {
@@ -177,6 +192,7 @@ class _LoginState extends State<Login> {
                                           print("saving jwt...");
                                           print(
                                               "for id ${json.decode(jwt)["id"]}");
+                                          CircularProgressIndicator();
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -185,6 +201,13 @@ class _LoginState extends State<Login> {
                                           // Navigator.pushNamed(context, '/home');
                                           // Navigator.pop(context);
                                         }
+                                      }
+                                      else{
+                                          setState(() {
+                                            fieldError = 'All the fields are compulsory..';
+                                          });
+                                      }
+
                                       },
                                       child: Text(
                                         "Login",
@@ -197,21 +220,4 @@ class _LoginState extends State<Login> {
                       new Spacer(),
                     ])))));
   }
-
-  // FutureBuilder<LoginClass> buildFutureBuilder() {
-  //     return FutureBuilder<LoginClass>(
-  //       future: _futureLogin,
-  //       builder: (context, snapshot) {
-  //         if (snapshot.hasData) {
-  //           return Text(snapshot.data.username);
-  //         } else if (snapshot.hasError) {
-  //           return Text('${snapshot.error}');
-  //         }
-
-  //         return CircularProgressIndicator();
-  //       },
-  //     );
-  //   }
-  // }
-
 }

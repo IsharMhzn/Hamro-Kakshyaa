@@ -1,6 +1,7 @@
 from django.db.models import fields
 from .models import Notice 
 from subject.models import ClassCode, SubjectCode
+from user.serializers import UserSerializer
 
 from subject.serializers import SubjectCodeSerializer, ClassCodeSerializer
 from rest_framework import serializers
@@ -8,6 +9,7 @@ from rest_framework import serializers
 class NoticeSerializer(serializers.ModelSerializer):
     subjectcode = SubjectCodeSerializer() 
     classcode = ClassCodeSerializer()
+    author = UserSerializer()
     date_posted = serializers.DateTimeField(read_only = True, format = '%Y-%m-%d')
     time_posted = serializers.SerializerMethodField('get_time')
 
