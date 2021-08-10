@@ -20,6 +20,7 @@ void main() async {
   // await dotenv.load(fileName: "assets/env/.env");
   runApp(MaterialApp(
       // home: Home(),
+      // home: Register1(),
       debugShowCheckedModeBanner: false,
       initialRoute: '/register1',
       // home: Navigate()
@@ -27,8 +28,8 @@ void main() async {
         '/register1': (context) => Register1(),
         '/register2': (conetxt) => Register2(),
         '/login': (context) => Login(),
-        '/logour': (context) => MyAppBar(),
-        // '/home': (context) => Home()
+        '/logout': (context) => AppBarProfile(),
+        // '/home': (context) => Home(),
       }));
 }
 
@@ -44,6 +45,6 @@ class Home extends StatelessWidget {
   final Map<String, dynamic> payload;
   @override
   Widget build(BuildContext context) {
-    return NavBar();
+    return NavBar(jwt: jwt);
   }
 }
