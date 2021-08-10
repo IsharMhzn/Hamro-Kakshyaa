@@ -59,15 +59,15 @@ class NoticeList(generics.ListAPIView):
         #     # user = User.objects.first()        
         subject = self.request.query_params.get('subject')
 
-        if subject is not None:
-            objects = objects.filter(subj_code = subject)
+        # if subject is not None:
+        #     objects = objects.filter(subj_code = subject)
             
         return objects
         
 
 class NoticeCreate(generics.CreateAPIView):
     serializer_class = NoticeCreateSerializer
-
+    print("I n Notice")
         
 class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Notice.objects.all()

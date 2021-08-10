@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializer import ClassRoutineSerializer
+from .serializer import ClassRoutineSerializer, RoutineCreateSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response 
@@ -8,8 +8,9 @@ from .models import classRoutine
 
 # Create your views here.
 
-class ListClassRoutine(generics.ListCreateAPIView):
+class ListClassRoutine(generics.ListAPIView):
     serializer_class = ClassRoutineSerializer
+    print("IN list")
     queryset  = classRoutine.objects.all() 
     # def get_queryset(self):
     #     user = self.request.user
@@ -27,7 +28,9 @@ class ListClassRoutine(generics.ListCreateAPIView):
     #         return objects
        
 
-
+class RoutineCreate(generics.CreateAPIView):
+    print("in views")
+    serializer_class = RoutineCreateSerializer
 
 class ClassRoutineDetail(generics.RetrieveUpdateDestroyAPIView):
  serializer_class = ClassRoutineSerializer
