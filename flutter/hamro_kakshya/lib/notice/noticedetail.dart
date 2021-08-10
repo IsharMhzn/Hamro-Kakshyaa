@@ -135,9 +135,13 @@ class _NoticeDetailState extends State<NoticeDetail> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Icon(Icons.person),
+                      CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            widget.notices[widget.index].author.photo,
+                          ),
+                          radius: 30),
                       Text(
-                        'Username',
+                        widget.notices[widget.index].author.name,
                         style: TextStyle(fontSize: 15),
                       )
                     ],

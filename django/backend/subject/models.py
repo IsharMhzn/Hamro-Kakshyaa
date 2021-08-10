@@ -32,9 +32,7 @@ class Subject(models.Model):
     subjectcode = models.ForeignKey(SubjectCode, on_delete=models.CASCADE)
     classcode = models.ForeignKey(ClassCode, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'{self.teacher.user.name} | {self.subjectcode.code} | {self.classcode.code()}'
-    
+   
 
 
 

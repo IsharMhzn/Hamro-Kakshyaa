@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:hamro_kakshya/main.dart';
 
 import 'package:flutter/material.dart';
+import 'package:hamro_kakshya/note.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -10,14 +11,16 @@ void main() {
 
 class Student {
   String name, group, role = "Student";
+  String photo;
   int batch, reg_no;
 
-  Student({this.name, this.group, this.batch, this.reg_no});
+  Student({this.name, this.group, this.batch, this.reg_no, this.photo});
 
   factory Student.fromJson(Map<String, dynamic> json) {
     return Student(
       name: json['user']['name'],
       group: json['user']['faculty'],
+      photo: json['user']['photo'],
       batch: json['batch'],
       reg_no: json['registration_no'],
     );
@@ -25,15 +28,16 @@ class Student {
 }
 
 class Teacher {
-  String name, faculty, email, role = "Teacher";
+  String name, faculty, email, photo, role = "Teacher";
 
-  Teacher({this.name, this.faculty, this.email});
+  Teacher({this.name, this.faculty, this.email, this.photo});
 
   factory Teacher.fromJson(Map<String, dynamic> json) {
     return Teacher(
       name: json['user']['name'],
       faculty: json['user']['faculty'],
       email: json['email'],
+      photo: json['user']['photo'],
     );
   }
 }
@@ -72,6 +76,41 @@ Future<Teacher> fetchTeacher(http.Client client, String jwt) async {
   }
 }
 
+Future<List<NotesClass>> fetchNotes() async {
+  var url = "http://192.168.1.74:8000";
+  final response = await http.get(Uri.parse('$url/notes/own/'));
+
+  if (response.statusCode == 200) {
+    List notes = jsonDecode(response.body).cast<Map<String, dynamic>>();
+    print(notes);
+    return notes.map((json) => NotesClass.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load Notice');
+  }
+}
+
+Future<List<NotesClass>> fetchownNotes(String jwt) async {
+  String bearer_token = json.decode(jwt)["access"];
+  var id = json.decode(jwt)["id"];
+
+  print("sending get request...");
+
+  var url = "192.168.1.74:8000";
+  final response = await http.get(Uri.http(url, '/notes/own/', {"id": "$id"}),
+      headers: {"Authorization": "Bearer ${bearer_token}"});
+
+  print("recevied own notes");
+
+  if (response.statusCode == 200) {
+    print(response.body);
+    List notes = jsonDecode(response.body).cast<Map<String, dynamic>>();
+    return notes.map((json) => NotesClass.fromJson(json)).toList();
+  } else {
+    // print("");
+    throw Exception('Failed to load Notice');
+  }
+}
+
 class Profile extends StatefulWidget {
   String jwt;
 
@@ -86,6 +125,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   Future<Student> futureStudent;
   Future<Teacher> futureTeacher;
+  Future<List<NotesClass>> futureNotes;
+
   String role;
 
   @override
@@ -96,6 +137,8 @@ class _ProfileState extends State<Profile> {
     } else if (role == "teacher") {
       futureTeacher = fetchTeacher(http.Client(), widget.jwt);
     }
+    futureNotes = fetchownNotes(widget.jwt);
+
     super.initState();
   }
 
@@ -103,21 +146,67 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[00],
-        body: FutureBuilder(
-          future: this.role == "student" ? futureStudent : futureTeacher,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData) {
-                return ProfileSec(data: snapshot.data);
-              } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              }
-            }
-            return Center(
-                child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(Color(0xFF126E82)),
-            ));
-          },
+        body: Column(
+          children: [
+            FutureBuilder(
+              future: this.role == "student" ? futureStudent : futureTeacher,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    return ProfileSec(data: snapshot.data);
+                  } else if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  }
+                }
+                return Center(
+                    child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Color(0xFF126E82)),
+                ));
+              },
+            ),
+            Container(
+              padding: EdgeInsets.all(5),
+              child: new Center(
+                child: Column(children: [
+                  Text(
+                    "Personal Recource Section ",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ]),
+              ),
+              color: Color(0xffe1f6f7),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+              child: FutureBuilder<List<NotesClass>>(
+                future: futureNotes,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          return NotesContainer(snapshot.data[index]);
+                        });
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
+                  }
+
+                  // By default, show a loading spinner.
+                  return Center(child: CircularProgressIndicator());
+                },
+              ),
+            ),
+            Divider(
+              height: 5,
+              color: Colors.grey[700],
+            ),
+          ],
         ));
   }
 }
@@ -142,7 +231,9 @@ class ProfileSec extends StatelessWidget {
               children: [
                 SizedBox(width: 10),
                 CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/user.png'),
+                    backgroundImage: NetworkImage(
+                      data.photo,
+                    ),
                     radius: 30),
                 SizedBox(width: 20),
                 Divider(
@@ -163,24 +254,6 @@ class ProfileSec extends StatelessWidget {
                 ),
               ],
             ),
-            color: Color(0xffe1f6f7),
-          ),
-          Divider(
-            height: 5,
-            color: Colors.grey[700],
-          ),
-          Container(
-            padding: EdgeInsets.all(5),
-            child: new Center(
-              child: Text(
-                "Personal Recource Section ",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            height: 250,
             color: Color(0xffe1f6f7),
           ),
           Divider(

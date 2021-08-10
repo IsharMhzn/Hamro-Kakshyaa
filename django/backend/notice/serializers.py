@@ -1,6 +1,7 @@
 from django.db.models import fields
 from .models import Notice 
 from subject.models import ClassCode, SubjectCode
+from user.serializers import UserSerializer
 
 from subject.serializers import SubjectCodeSerializer, ClassCodeSerializer
 from rest_framework import serializers
@@ -8,6 +9,7 @@ from rest_framework import serializers
 class NoticeSerializer(serializers.ModelSerializer):
     subjectcode = SubjectCodeSerializer() 
     classcode = ClassCodeSerializer()
+    author = UserSerializer()
     date_posted = serializers.DateTimeField(read_only = True, format = '%Y-%m-%d')
     time_posted = serializers.SerializerMethodField('get_time')
 
@@ -27,6 +29,7 @@ class NoticeCreateSerializer(serializers.ModelSerializer):
         fields = 'title', 'description', 'classcode', 'subjectcode'
 
     def get_object(self, validated_data, type):
+        print("I n get_obje")
         code = validated_data.get(type).get('code').strip()
         code = ''.join((l.upper() for l in code.split()))
         validated_data.pop(type)
@@ -45,6 +48,7 @@ class NoticeCreateSerializer(serializers.ModelSerializer):
         return obj, validated_data
 
     def create(self, validated_data):
+        print("In create_obje")
         c_code, validated_data = self.get_object(validated_data, 'classcode')
         s_code, validated_data = self.get_object(validated_data, 'subjectcode')
 

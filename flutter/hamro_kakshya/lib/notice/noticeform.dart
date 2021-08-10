@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hamro_kakshya/appbar.dart';
 import 'package:hamro_kakshya/notice/noticeclass.dart';
 import 'package:hamro_kakshya/subject/classcode.dart';
 import 'package:hamro_kakshya/subject/subjectcode.dart';

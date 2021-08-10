@@ -3,7 +3,6 @@ import 'appbar.dart';
 import 'homescreen/homescreen.dart';
 import 'notice/notice.dart';
 import 'profile/profile.dart';
-import 'routine/routinepage.dart';
 import 'routine/routine.dart';
 import 'note.dart';
 // import 'routine/routine.dart';
