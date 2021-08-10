@@ -19,6 +19,16 @@ class RegisterAPI(generics.GenericAPIView):
             "user": UserSerializer(user, context = self.get_serializer_context()).data,
         })
 
+class RegisterPhotoAPI(generics.RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+    permission_class = [permissions.AllowAny]
+ 
+    def get_object(self):
+        id = self.kwargs["id"]
+        return User.objects.all().filter(id=id)[0]
+
+
+
 class LoginAPI(TokenObtainPairView):
     serializer_class = LoginSerializer
 
@@ -36,7 +46,8 @@ class UserAPI(generics.RetrieveAPIView):
     authentication_class = UseJWTAuthentication
 
     def get_object(self):
-        return self.request.user
+        id = self.kwargs["id"]
+        return User.objects.all().filter(id=id)[0]
 
 class StudentAPI(generics.RetrieveAPIView):
     queryset = Student.objects.all()

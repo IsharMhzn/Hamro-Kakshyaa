@@ -47,7 +47,7 @@ Future<Student> fetchStudent(http.Client client, String jwt) async {
 
   var bearer_token = json.decode(jwt)["access"];
   var id = json.decode(jwt)["id"];
-  var url = "http://192.168.1.74:8000/student/${id}";
+  var url = "http://192.168.100.161:8000/student/${id}";
 
   final response = await client
       .get(Uri.parse(url), headers: {"Authorization": "Bearer $bearer_token"});
