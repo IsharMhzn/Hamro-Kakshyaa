@@ -18,7 +18,7 @@ class LatestNotice {
 Future<List<LatestNotice>> fetchLatestNotices(String jwt) async {
   print("Fetching latest notices");
 
-  Future.delayed(Duration(seconds: 1));
+  Future.delayed(Duration(seconds: 5));
 
   String bearer_token = json.decode(jwt)['access'];
   print("Requesting url");
