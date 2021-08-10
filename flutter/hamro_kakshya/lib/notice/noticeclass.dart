@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class NoticeClass {
   final String title, description, date;
-  String time;
+  final String time;
   final SubjectCode subjectcode;
   final ClassCode classcode;
 
@@ -19,20 +19,20 @@ class NoticeClass {
       this.classcode,
       this.date,
       this.time}) {
-    int hour, min;
-    String t;
-    List<String> vals = time.split('-');
-    hour = int.parse(vals[0]);
-    min = int.parse(vals[1]);
+    // int hour, min;
+    // String t;
+    // List<String> vals = time.split('-');
+    // hour = int.parse(vals[0]);
+    // min = int.parse(vals[1]);
 
-    if (hour > 12) {
-      hour -= 12;
-      t = 'PM';
-    } else {
-      t = 'AM';
-    }
+    // if (hour > 12) {
+    //   hour -= 12;
+    //   t = 'PM';
+    // } else {
+    //   t = 'AM';
+    // }
 
-    this.time = '$hour:$min $t';
+    // this.time = '$hour:$min $t';
     // print(this.time);
   }
 

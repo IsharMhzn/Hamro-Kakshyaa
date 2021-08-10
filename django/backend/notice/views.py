@@ -36,17 +36,17 @@ class NoticeList(generics.ListAPIView):
                 classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
                 objects = objects.filter(classcode=classcode)
         
-        subject = self.request.query_params.get('subject')
+        # subject = self.request.query_params.get('subject')
 
-        if subject is not None:
-            objects = objects.filter(subj_code = subject)
+        # if subject is not None:
+        #     objects = objects.filter(subj_code = subject)
             
-        return objects[::-1]
+        # return objects[::-1]
         
 
 class NoticeCreate(generics.CreateAPIView):
     serializer_class = NoticeCreateSerializer
-
+    print("I n Notice")
         
 class NoticeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Notice.objects.all()
