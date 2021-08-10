@@ -3,32 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hamro_kakshya/login/register2.dart';
 import 'package:http/http.dart' as http;
 import 'package:toggle_switch/toggle_switch.dart';
+import 'login.dart';
 
-void main(){
+void main() {
   runApp(Register1());
 }
-
-// class RegisterStudentClass {
-//   final String name;
-//   final String faculty;
-//   final int registrationNo;
-//   final int batch;
-//   final bool isCR;
-//   final bool isStudent;
-//   // final photo upload
-
-//   RegisterStudentClass({this.name, this.faculty, this.registrationNo, this.batch, this.isCR, this.isStudent=true});
-// }
-
-// class RegisterTeacherClass {
-//   final String name;
-//   final String faculty;
-//   final String email;
-//   final bool isTeacher;
-//   // final photo upload
-
-//   RegisterTeacherClass({this.name, this.faculty, this.email,this.isTeacher=true});
-// }
 
 class RegisterClass {
   final String name;
@@ -39,92 +18,84 @@ class RegisterClass {
   bool isStudent;
   String email;
   bool isTeacher;
-  // final String username;
-  // final String password;
-  // final photo upload
 
-  RegisterClass({this.name, this.faculty, this.registrationNo, this.batch, this.isCR, this.isStudent, this.email, this.isTeacher });
+  RegisterClass(
+      {this.name,
+      this.faculty,
+      this.registrationNo,
+      this.batch,
+      this.isCR,
+      this.isStudent,
+      this.email,
+      this.isTeacher});
 }
 
 class Register1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-    home: Scaffold(
-      backgroundColor: const Color(0xFF126E82),
-      body : new Container(
-        color: const Color(0xFF51C4D3),
-        margin: EdgeInsets.all(17),
-        child: new Container(
-          margin: EdgeInsets.all(15),
-          color: const Color(0xFFD8E3E7),
-          child: new Column(
-            children: <Widget> [
-            // new Spacer(),
-            new Flexible(
-                flex:1,
-                child: new FractionallySizedBox(
-                  widthFactor: 1,
-                  // heightFactor: 1,
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    // color: const Color(0xFFFCD5DD),
-                    // child: Center(
-                      child: Text(
-                        "Welcome to",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontFamily: 'Tuffy',
-                          fontSize: 25,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            backgroundColor: const Color(0xFF126E82),
+            body: new Container(
+                color: const Color(0xFF51C4D3),
+                margin: EdgeInsets.all(17),
+                child: new Container(
+                    margin: EdgeInsets.all(15),
+                    color: const Color(0xFFD8E3E7),
+                    child: new Column(children: <Widget>[
+                      // new Spacer(),
+                      new Flexible(
+                        flex: 1,
+                        child: new FractionallySizedBox(
+                            widthFactor: 1,
+                            // heightFactor: 1,
+                            child: Container(
+                                margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                child: Text(
+                                  "Welcome to",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'Tuffy',
+                                    fontSize: 25,
+                                  ),
+                                )
+                                //  )
+                                )),
+                      ),
+                      new Flexible(
+                          flex: 2,
+                          child: new FractionallySizedBox(
+                              widthFactor: 1,
+                              // heightFactor: 1,
+                              child: Container(
+                                // margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                // color: const Color(0xFFFCD5DD),
+                                // child: Center(
+                                child: Text(
+                                  "Hamro Kakshyaa",
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.italianno(
+                                    fontSize: 55,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  // fontSize: 40,
+                                ),
+                              )
+                              //  )
+                              )),
+                      new Flexible(
+                        flex: 11,
+                        child: new FractionallySizedBox(
+                          widthFactor: 1,
+                          // heightFactor: 1,
+                          child: RegisterUsers(),
                         ),
-                        )
-                    //  )
-                  )
-                ),
-            ),
-            new Flexible(
-            flex:2,
-            child: new FractionallySizedBox(
-              widthFactor: 1,
-              // heightFactor: 1,
-              child: Container(
-                    // margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    // color: const Color(0xFFFCD5DD),
-                    // child: Center(
-                      child: Text(
-                        "Hamro Kakshyaa",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.italianno(
-                          fontSize: 55,
-                          fontWeight: FontWeight.w500,
-                        ),
-                          // fontSize: 40,
-                        ),
-                        )
-                    //  )
-                  )
-            
-          ),
-          new Flexible(
-            flex:11,
-            child: new FractionallySizedBox(
-              widthFactor: 1,
-              // heightFactor: 1,
-              child: RegisterUsers(),
-          ),
-          ),
-          // RegisterUsers(),
-          
-            // new Spacer(),
-           ]
-        
+                      ),
+                      // RegisterUsers(),
 
-        )
-      )
-    )
-    )
-    );
+                      // new Spacer(),
+                    ])))));
   }
 }
 
@@ -136,12 +107,12 @@ class RegisterUsers extends StatefulWidget {
 class _RegisterUsersState extends State<RegisterUsers> {
   final TextEditingController _namecontroller = TextEditingController();
   final TextEditingController _facultycontroller = TextEditingController();
-  final TextEditingController _registrationNocontroller = TextEditingController();
+  final TextEditingController _registrationNocontroller =
+      TextEditingController();
   final TextEditingController _batchcontroller = TextEditingController();
   bool _isCRcontroller = false;
   final TextEditingController _emailcontroller = TextEditingController();
-  // final TextEditingController _photocontroller = TextEditingController();
-
+  String fieldError = '';
 
   bool _swapUsers = false;
   bool _isCR = false;
@@ -151,278 +122,281 @@ class _RegisterUsersState extends State<RegisterUsers> {
   }
 
   Widget build(BuildContext context) {
-    
-    Widget registerStudent(){
-      return  Column(
-        children: <Widget> [ 
-          new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
+    Widget registerStudent() {
+      return Column(children: <Widget>[
+        new Flexible(
+          flex: 1,
+          child: new FractionallySizedBox(
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
-                // color: const Color(0xFFFCD5DD),
-                child: TextField(
+                  margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
+                  // color: const Color(0xFFFCD5DD),
+                  child: TextField(
                     controller: _namecontroller,
                     obscureText: false,
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.person),
-                    labelText: 'Name',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.person),
+                      labelText: 'Name',
                     ),
-                )   
-              )
-            ),
-          ),
-          new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
+                  ))),
+        ),
+        new Flexible(
+          flex: 1,
+          child: new FractionallySizedBox(
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
-                // color: const Color(0xFFFCD5DD),
-                child: TextField(
+                  margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
+                  // color: const Color(0xFFFCD5DD),
+                  child: TextField(
                     controller: _facultycontroller,
                     obscureText: false,
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.book),
-                    labelText: 'Faculty',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.book),
+                      labelText: 'Faculty',
                     ),
-                )   
-              )
-            ),
-          ),
-          new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
+                  ))),
+        ),
+        new Flexible(
+          flex: 1,
+          child: new FractionallySizedBox(
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
-                // color: const Color(0xFFFCD5DD),
-                child: TextField(
+                  margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
+                  // color: const Color(0xFFFCD5DD),
+                  child: TextField(
                     controller: _registrationNocontroller,
                     obscureText: false,
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.add_outlined),
-                    labelText: 'Registration number',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.add_outlined),
+                      labelText: 'Registration number',
                     ),
-                )   
-              )
-            ),
-          ),
-          new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
+                  ))),
+        ),
+        new Flexible(
+          flex: 1,
+          child: new FractionallySizedBox(
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
-                // color: const Color(0xFFFCD5DD),
-                child: TextField(
+                  margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
+                  // color: const Color(0xFFFCD5DD),
+                  child: TextField(
                     controller: _batchcontroller,
                     obscureText: false,
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.school),
-                    labelText: 'Batch',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.school),
+                      labelText: 'Batch',
                     ),
-                )   
-              )
-            ),
-          ),
-          new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
+                  ))),
+        ),
+        new Flexible(
+          flex: 1,
+          child: new FractionallySizedBox(
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
                 margin: EdgeInsets.fromLTRB(32, 0, 32, 5),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey,),
+                  border: Border.all(
+                    color: Colors.grey,
+                  ),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 // color: const Color(0xFFFCD5DD),
-                child:  new CheckboxListTile(  
+                child: new CheckboxListTile(
                   checkColor: Colors.black,
                   activeColor: Colors.cyan,
-                  value: this._isCR,   
+                  value: this._isCR,
                   title: Text('Are you a CR?',
-                  style: TextStyle(color: Colors.grey[700])
-                  ),
+                      style: TextStyle(color: Colors.grey[700])),
                   secondary: new Icon(Icons.question_answer_outlined),
-                  onChanged: (bool value) {  
-                    setState(() {  
-                      this._isCR = value; 
-                      if (this._isCR){
+                  onChanged: (bool value) {
+                    setState(() {
+                      this._isCR = value;
+                      if (this._isCR) {
                         _isCRcontroller = true;
-                      }  
-                    });  
-                  }
-                  ,  
-                ), 
-              )
-            ),
-          ), 
-
-          // new Spacer(),
-           new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
-              widthFactor: 1,
-              // heightFactor: 1,
-              child: Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 0), 
-                decoration: BoxDecoration(
-                  color: const Color(0xFF126E82),
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                child: new TextButton(
-                  onPressed: (){
-                  Navigator.push(context, new MaterialPageRoute(
-                    builder: (context) =>
-                      Register2(),
-                      settings: RouteSettings(
-                        arguments: RegisterClass(
-                        name: _namecontroller.text, 
-                        faculty: _facultycontroller.text, 
-                        registrationNo: int.parse(_registrationNocontroller.text),
-                        batch : int.parse(_batchcontroller.text),
-                        isCR: _isCRcontroller,
-                        isStudent: true,
-                        isTeacher: false,
-                    )
-                      )
-                      
-                      )
-                    );
-
-
+                      }
+                    });
                   },
-                  child: Text(
-                    "Continue",
-                    style: TextStyle(color: Colors.white,
-                    fontFamily: 'Tuffy',
-                          fontSize: 20,),
-                    )
-                )
-                )
-              )
-            ),
-            // new Spacer(),
-           ]
-      );
+                ),
+              )),
+        ),
+        Center(
+            child: Text(
+          fieldError,
+          style: TextStyle(color: Colors.red, fontSize: 15),
+        )),
+        SizedBox(
+          height: 10,
+        ),
+        // new Spacer(),
+        new Flexible(
+            flex: 1,
+            child: new FractionallySizedBox(
+                widthFactor: 1,
+                // heightFactor: 1,
+                child: Container(
+                    margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF126E82),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: new TextButton(
+                        onPressed: () {
+                          if (_namecontroller.text != '' &&
+                              _facultycontroller.text != '' &&
+                              _registrationNocontroller.text != '' &&
+                              _batchcontroller.text != '') {
+                            setState(() {
+                              fieldError = '';
+                            });
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => Register2(),
+                                    settings: RouteSettings(
+                                        arguments: RegisterClass(
+                                      name: _namecontroller.text,
+                                      faculty: _facultycontroller.text,
+                                      registrationNo: int.parse(
+                                          _registrationNocontroller.text),
+                                      batch: int.parse(_batchcontroller.text),
+                                      isCR: _isCRcontroller,
+                                      isStudent: true,
+                                      isTeacher: false,
+                                    ))));
+                          } else {
+                            setState(() {
+                              fieldError = 'All the fields are compulsory.';
+                            });
+                          }
+                        },
+                        child: Text(
+                          "Continue",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Tuffy',
+                            fontSize: 20,
+                          ),
+                        ))))),
+        // new Spacer(),
+      ]);
     }
 
-     Widget registerTeacher(){
-      return  Column(
-        children: <Widget> [ 
-          new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
+    Widget registerTeacher() {
+      return Column(children: <Widget>[
+        new Flexible(
+          flex: 1,
+          child: new FractionallySizedBox(
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
-                margin: EdgeInsets.fromLTRB(32, 20, 32, 0),
-                // color: const Color(0xFFFCD5DD),
-                child: TextField(
+                  margin: EdgeInsets.fromLTRB(32, 20, 32, 0),
+                  // color: const Color(0xFFFCD5DD),
+                  child: TextField(
                     controller: _namecontroller,
                     obscureText: false,
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.person),
-                    labelText: 'Name',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.person),
+                      labelText: 'Name',
                     ),
-                )   
-              )
-            ),
-          ),
-          new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
+                  ))),
+        ),
+        new Flexible(
+          flex: 1,
+          child: new FractionallySizedBox(
               widthFactor: 1,
               heightFactor: 1,
               child: Container(
-                margin: EdgeInsets.fromLTRB(32, 20, 32, 0),
-                // color: const Color(0xFFFCD5DD),
-                child: TextField(
+                  margin: EdgeInsets.fromLTRB(32, 20, 32, 0),
+                  // color: const Color(0xFFFCD5DD),
+                  child: TextField(
                     controller: _facultycontroller,
                     obscureText: false,
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.book),
-                    labelText: 'Faculty',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.book),
+                      labelText: 'Faculty',
                     ),
-                )   
-              )
-            ),
-          ),
-          new Flexible(
-           flex:1,
-            child: new FractionallySizedBox(
-              widthFactor: 1,
-              heightFactor: 1,
-              child: Container(
+                  ))),
+        ),
+        new Flexible(
+          flex: 1,
+          child: new FractionallySizedBox(
+            widthFactor: 1,
+            heightFactor: 1,
+            child: Container(
                 margin: EdgeInsets.fromLTRB(32, 20, 32, 0),
                 // color: const Color(0xFFFCD5DD),
                 child: TextField(
                     controller: _emailcontroller,
                     obscureText: false,
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.email_outlined),
-                    labelText: 'Email'
-                )   
-              )
-            ),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.email_outlined),
+                        labelText: 'Email'))),
           ),
-          ),
-
-       
-           new Flexible(
-           flex:1,
+        ),
+        Center(
+            child: Text(
+          fieldError,
+          style: TextStyle(color: Colors.red, fontSize: 15),
+        )),
+        SizedBox(
+          height: 10,
+        ),
+        new Flexible(
+            flex: 1,
             child: new FractionallySizedBox(
-              widthFactor: 1,
-              // heightFactor: 1,
-              child: Container(
-                margin: EdgeInsets.fromLTRB(32, 0, 32, 0), 
-                decoration: BoxDecoration(
-                  color: const Color(0xFF4AAEBB),
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                child: new TextButton(
-                  onPressed: (){
-                    
-                    Navigator.push(context, new MaterialPageRoute(
-                    builder: (context) =>
-                      Register2(),
-                      settings: RouteSettings(
-                        arguments: RegisterClass(
-                        name: _namecontroller.text,
-                        faculty: _facultycontroller.text, 
-                        email: _emailcontroller.text, 
-                        isTeacher: true,
-                        isStudent: false,
-                        )
-                      )
-                    ) );
-                  },
-                  child: Text(
-                    "Continue",
-                    style: TextStyle(color: Colors.white,
-                    fontFamily: 'Tuffy',
-                          fontSize: 20,),
-                    )
-                )
-                )
-              )
-            ),
-           ]
-      );
+                widthFactor: 1,
+                // heightFactor: 1,
+                child: Container(
+                    margin: EdgeInsets.fromLTRB(32, 0, 32, 0),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFF4AAEBB),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: new TextButton(
+                        onPressed: () {
+                          if (_namecontroller.text != '' &&
+                              _facultycontroller.text != '' &&
+                              _emailcontroller.text != '') {
+                            setState(() {
+                              fieldError = '';
+                            });
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => Register2(),
+                                    settings: RouteSettings(
+                                        arguments: RegisterClass(
+                                      name: _namecontroller.text,
+                                      faculty: _facultycontroller.text,
+                                      email: _emailcontroller.text,
+                                      isTeacher: true,
+                                      isStudent: false,
+                                    ))));
+                          } else {
+                            setState(() {
+                              fieldError = 'All the fields are compulsory..';
+                            });
+                          }
+                        },
+                        child: Text(
+                          "Continue",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Tuffy',
+                            fontSize: 20,
+                          ),
+                        ))))),
+      ]);
     }
 
     final userToggleBtn = Container(
@@ -436,17 +410,19 @@ class _RegisterUsersState extends State<RegisterUsers> {
         minHeight: 40,
         fontSize: 20.0,
         initialLabelIndex: _swapUsers ? 0 : 1,
-        activeBgColors: [[Color(0xFF126E82)],[Color(0xFF4AAEBB)]],
+        activeBgColors: [
+          [Color(0xFF126E82)],
+          [Color(0xFF4AAEBB)]
+        ],
         activeFgColor: Colors.white,
         inactiveBgColor: const Color(0xFFD8E3E7),
         inactiveFgColor: Colors.black54,
         borderColor: [Colors.grey[350]],
-        animate: true, // with just animate set to true, default curve = Curves.easeIn
+        animate:
+            true, // with just animate set to true, default curve = Curves.easeIn
         curve: Curves.bounceInOut,
         labels: ['As Student', 'As Teacher'],
         onToggle: (index) {
-          print('switched to: $index');
-          print('switched to: $_swapUsers');
           setState(() {
             _swapUsers = !_swapUsers;
           });
@@ -486,6 +462,35 @@ class _RegisterUsersState extends State<RegisterUsers> {
                       child: swapTile, //getCustomContainer(),
                     ),
                   ),
+                  Expanded(
+                    flex: 1,
+                    child: FloatingActionButton.extended(
+                        label: Text("Login Directly",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Tuffy',
+                            fontSize: 17,
+                          )
+                        
+                        ),
+                        tooltip: "Jump to Login page",
+                        backgroundColor: const Color(0xFF126E82),
+                        foregroundColor: Colors.white,
+                        hoverColor: Colors.cyan,
+                        icon: Icon(
+                          Icons.login_rounded,
+                          size: 30,    
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                Login()));
+                        })),
+                      SizedBox(
+                        height:10
+                      ),
                 ],
               ),
             ),
@@ -493,29 +498,14 @@ class _RegisterUsersState extends State<RegisterUsers> {
         ),
       ],
     );
-    
 
     final body = Container(
       width: MediaQuery.of(context).size.width,
-      // padding: EdgeInsets.only(
-      //   top: 12.0,
-      // ),
-      // decoration: BoxDecoration(
-      //   gradient: LinearGradient(
-      //     begin: Alignment.topCenter,
-      //     end: Alignment.bottomCenter,
-      //     stops: [0.5, 1.0],
-      //     colors: [
-      //       Color(0xFF03B898),
-      //       Color(0xFF01816B),
-      //     ],
-      //   ),
-      // ),
       child: Column(
         children: <Widget>[
           Expanded(
             flex: 11,
-              child: registerWidget,
+            child: registerWidget,
           ),
         ],
       ),
@@ -524,4 +514,3 @@ class _RegisterUsersState extends State<RegisterUsers> {
     return body;
   }
 }
-

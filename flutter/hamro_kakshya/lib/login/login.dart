@@ -58,7 +58,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _usernamecontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
-
+  String fieldError = '';
   String jwt;
 
   // Future<LoginClass> _futureLogin;
@@ -152,7 +152,14 @@ class _LoginState extends State<Login> {
                                   ),
                                 ))),
                       ),
-
+                      Center(
+                          child: Text(
+                        fieldError,
+                        style: TextStyle(color: Colors.red, fontSize: 15),
+                      )),
+                      SizedBox(
+                        height: 10,
+                      ),
                       new Flexible(
                           flex: 1,
                           child: new FractionallySizedBox(
@@ -166,7 +173,10 @@ class _LoginState extends State<Login> {
                                       borderRadius: BorderRadius.circular(20)),
                                   child: new TextButton(
                                       onPressed: () {
-                                        // _futureLogin = performLogin(_usernamecontroller.text,_passwordcontroller.text);
+                                      if (_usernamecontroller.text != '' && _passwordcontroller.text != '') {
+                                          setState(() {
+                                          fieldError = '';
+                                        });
                                         performLogin(_usernamecontroller.text,
                                                 _passwordcontroller.text)
                                             .then((value) {
@@ -191,6 +201,13 @@ class _LoginState extends State<Login> {
                                           // Navigator.pushNamed(context, '/home');
                                           // Navigator.pop(context);
                                         }
+                                      }
+                                      else{
+                                          setState(() {
+                                            fieldError = 'All the fields are compulsory..';
+                                          });
+                                      }
+
                                       },
                                       child: Text(
                                         "Login",

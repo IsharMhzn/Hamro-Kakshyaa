@@ -62,7 +62,6 @@ Future<RegisterUsers> performRegister(String name, String faculty, int registrat
   }
 
   String photoname = file.path.split('/').last;
-
   Response response;
   Dio dio = new Dio();
   var url = 'http://192.168.100.161:8000/register/';
@@ -94,10 +93,8 @@ Future<RegisterUsers> performRegister(String name, String faculty, int registrat
 // print(formData.toString());
   // try {
     response = await dio.post(url, data: formData,);
-    print('Happening3');
     print(response.statusMessage);
     if (response.statusCode == 200) {
-      print("Success");
       print(response.data);
       print(response.data.toString());
       print(response.data['user']['id']);
@@ -151,11 +148,13 @@ class _Register2State extends State<Register2> {
 final TextEditingController _usernamecontroller = TextEditingController();
 final TextEditingController _passwordcontroller = TextEditingController();
 final TextEditingController _password2controller = TextEditingController();
+String fieldError = '';
+String photoUploaded = 'Upload your photo here';
+File file;
 
   @override
     Widget build(BuildContext context) {
     final userDetails = ModalRoute.of(context).settings.arguments as RegisterClass;
-    File file;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
     home: Scaffold(
@@ -301,7 +300,7 @@ final TextEditingController _password2controller = TextEditingController();
                         SizedBox(width:10),
                         Center(
                           child: Text(
-                            "Upload your photo here",
+                            photoUploaded,
                             style: TextStyle(
                                 color: Colors.grey[700],
                                 fontSize: 16,
@@ -317,15 +316,21 @@ final TextEditingController _password2controller = TextEditingController();
                         // hoverColor: Colors.cyan,
                         child: Icon(
                           Icons.add,
-                          size: 30,
-                          
+                          size: 30,       
 
                         ),
                         onPressed: () async {
-                        ImagePicker picker  = ImagePicker();
-                        final xfile = await picker.pickImage(source: ImageSource.gallery,imageQuality: 50, maxHeight: 500, maxWidth: 500);
-                        file = File(xfile.path);
-                        }),
+                          ImagePicker picker  = ImagePicker();
+                          final xfile = await picker.pickImage(source: ImageSource.gallery,imageQuality: 50, maxHeight: 500, maxWidth: 500);
+                          setState(() {
+                            file = File(xfile.path);
+                          });                       
+                          if(file!= null){
+                              setState(() {
+                              photoUploaded = 'Photo Uploaded';
+                            });
+                          }
+                          }),
                         Spacer()
                         ]
                         
@@ -336,7 +341,14 @@ final TextEditingController _password2controller = TextEditingController();
               )
             ),
           
-          
+          Center(
+            child: Text(
+          fieldError,
+            style: TextStyle(color: Colors.red, fontSize: 15),
+          )),
+          SizedBox(
+            height: 10,
+          ),
            new Flexible(
            flex:1,
             child: new FractionallySizedBox(
@@ -350,27 +362,42 @@ final TextEditingController _password2controller = TextEditingController();
                 ),
                 child: new TextButton(
                   onPressed: (){
-                    if(_password2controller.text == _passwordcontroller.text){
-                      performRegister(
-                        userDetails.name, 
-                        userDetails.faculty, 
-                        userDetails.registrationNo, 
-                        userDetails.batch, 
-                        userDetails.isCR, 
-                        userDetails.isStudent, 
-                        userDetails.email, 
-                        userDetails.isTeacher,
-                        _usernamecontroller.text, 
-                        _passwordcontroller.text,
-                        file
-                        );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                              Login()));
-                    }
+                    if (_usernamecontroller.text != '' && _passwordcontroller.text != '' && _password2controller.text != '' && file != null){
+                      setState(() {
+                        fieldError = '';
+                      });
+                      if(_password2controller.text == _passwordcontroller.text){
+                        performRegister(
+                          userDetails.name, 
+                          userDetails.faculty, 
+                          userDetails.registrationNo, 
+                          userDetails.batch, 
+                          userDetails.isCR, 
+                          userDetails.isStudent, 
+                          userDetails.email, 
+                          userDetails.isTeacher,
+                          _usernamecontroller.text, 
+                          _passwordcontroller.text,
+                          file
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                Login()));
+                      }
+                      else{
+                        setState(() {
+                          fieldError = 'Two password fields do not match.';
+                        });
+                      }
                     
+                  }
+                  else{
+                    setState(() {
+                        fieldError = 'All the fields are compulsory.';
+                      });
+                  }
                   },
                   child: Text(
                     "Register",
