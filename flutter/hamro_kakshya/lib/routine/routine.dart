@@ -80,19 +80,28 @@ class _RoutineListState extends State<RoutineList> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    String now = DateFormat("yyyy-MM-dd \n \t hh:mm").format(DateTime.now());
+    String now = DateFormat("yyyy-MM-dd \t hh:mm").format(DateTime.now());
     return Container(
       child: Column(
         children: [
           Container(
             height: 60,
+            width: size.width * 0.75,
             decoration: BoxDecoration(
                 color: Color(0xff5BD7E8),
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(35),
                   bottomRight: Radius.circular(35),
                 )),
-            child: Text('$now'),
+            child: Center(
+                child: Text('$now',
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ))),
+          ),
+          SizedBox(
+            height: 20,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -138,19 +147,19 @@ class _RoutineListState extends State<RoutineList> {
                       : []),
             ),
           ),
-          ElevatedButton(
-            child: Text('Upcoming Class'),
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF126E82), // background
-              onSurface: Colors.yellow,
-              onPrimary: Colors.white, // foreground
-            ),
-            // onPressed: () {
-            //   Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) => (UpcomingClass())));
-            // },
-          ),
+          // ElevatedButton(
+          //   child: Text('Upcoming Class'),
+          //   onPressed: () {},
+          //   style: ElevatedButton.styleFrom(
+          //     primary: const Color(0xFF126E82), // background
+          //     onSurface: Colors.yellow,
+          //     onPrimary: Colors.white, // foreground
+          //   ),
+          //   // onPressed: () {
+          //   //   Navigator.push(context,
+          //   //       MaterialPageRoute(builder: (context) => (UpcomingClass())));
+          //   // },
+          // ),
         ],
       ),
     );

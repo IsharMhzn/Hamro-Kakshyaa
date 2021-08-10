@@ -137,7 +137,7 @@ List<RoutineClass> parseNotices(String responseBody) {
 
 Future<RoutineClass> createRoutne(RoutineClass routine) async {
   final response = await http.post(
-      Uri.parse('http://192.168.254.10:8000/classRoutine/create/'),
+      Uri.parse('http://192.168.1.74:8000/classRoutine/create/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
       },

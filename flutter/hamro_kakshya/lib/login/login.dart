@@ -13,7 +13,7 @@ void main() {
 
 Future<String> performLogin(String username, String password) async {
   print("loggin in...");
-  var url = Uri.parse('http://192.168.100.161:8000');
+  var url = Uri.parse('http://192.168.1.74:8000');
   var client = http.Client();
   final response = await client.post(
     Uri.parse('$url/login/'),
@@ -29,8 +29,7 @@ Future<String> performLogin(String username, String password) async {
     // print(response.body);
     return (response.body);
     // return LoginClass.fromJson(jsonDecode(response.body));
-  }
-  else{
+  } else {
     print('Incorrect credentials.');
   }
   return null;
@@ -128,10 +127,10 @@ class _LoginState extends State<Login> {
                                   controller: _usernamecontroller,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Username',
-                                    prefixIcon: Icon(Icons.person_outline_sharp)
-                                  ),
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Username',
+                                      prefixIcon:
+                                          Icon(Icons.person_outline_sharp)),
                                 ))),
                       ),
                       new Flexible(
@@ -146,10 +145,9 @@ class _LoginState extends State<Login> {
                                   controller: _passwordcontroller,
                                   obscureText: true,
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Password',
-                                    prefixIcon: Icon(Icons.lock_outlined)
-                                  ),
+                                      border: OutlineInputBorder(),
+                                      labelText: 'Password',
+                                      prefixIcon: Icon(Icons.lock_outlined)),
                                 ))),
                       ),
                       Center(
@@ -173,41 +171,42 @@ class _LoginState extends State<Login> {
                                       borderRadius: BorderRadius.circular(20)),
                                   child: new TextButton(
                                       onPressed: () {
-                                      if (_usernamecontroller.text != '' && _passwordcontroller.text != '') {
+                                        if (_usernamecontroller.text != '' &&
+                                            _passwordcontroller.text != '') {
                                           setState(() {
-                                          fieldError = '';
-                                        });
-                                        performLogin(_usernamecontroller.text,
-                                                _passwordcontroller.text)
-                                            .then((value) {
-                                          setState(() {
-                                            // print(value);
-                                            jwt = value;
+                                            fieldError = '';
                                           });
-                                        });
+                                          performLogin(_usernamecontroller.text,
+                                                  _passwordcontroller.text)
+                                              .then((value) {
+                                            setState(() {
+                                              // print(value);
+                                              jwt = value;
+                                            });
+                                          });
 
-                                        // print(jwt);
-                                        if (jwt != null) {
-                                          storage.write(key: "jwt", value: jwt);
-                                          print("saving jwt...");
-                                          print(
-                                              "for id ${json.decode(jwt)["id"]}");
-                                          CircularProgressIndicator();
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Home.fromBase64(jwt)));
-                                          // Navigator.pushNamed(context, '/home');
-                                          // Navigator.pop(context);
+                                          // print(jwt);
+                                          if (jwt != null) {
+                                            storage.write(
+                                                key: "jwt", value: jwt);
+                                            print("saving jwt...");
+                                            print(
+                                                "for id ${json.decode(jwt)["id"]}");
+                                            CircularProgressIndicator();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Home.fromBase64(jwt)));
+                                            // Navigator.pushNamed(context, '/home');
+                                            // Navigator.pop(context);
+                                          }
+                                        } else {
+                                          setState(() {
+                                            fieldError =
+                                                'All the fields are compulsory..';
+                                          });
                                         }
-                                      }
-                                      else{
-                                          setState(() {
-                                            fieldError = 'All the fields are compulsory..';
-                                          });
-                                      }
-
                                       },
                                       child: Text(
                                         "Login",

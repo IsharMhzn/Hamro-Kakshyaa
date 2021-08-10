@@ -160,6 +160,7 @@ class _NoteState extends State<Note> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'notes',
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => NotesForm()));
@@ -445,8 +446,22 @@ class _NotesFormState extends State<NotesForm> {
 
                             if (filename != "") {
                               print('uploading a note...');
-                              uploadNote(
+                              var data = uploadNote(
                                   filename, widget.jwt, classcode, description);
+                              if (data is Future) {
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('Notes Uploaded!'),
+                                  backgroundColor: Color(0xff51C4D3),
+                                ));
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text('Notes upload failed!'),
+                                  backgroundColor: Color(0xff51C4D3),
+                                ));
+                              }
                             } else {
                               setState(() {
                                 file_error = "Choose a file...";

@@ -41,7 +41,7 @@ Widget routineCardGenerator(lecture) {
             children: [
               Text('Physical class',
                   style: TextStyle(color: Colors.black, fontSize: 16)),
-              Text('${lecture.room_no}',
+              Text('Room no: ${lecture.room_no}',
                   style: TextStyle(color: Colors.black, fontSize: 16)),
             ],
           )
@@ -89,8 +89,6 @@ Widget routineCardGenerator2(lecture) {
   );
 }
 
-
-
 Widget routineBlock() {
   List<Routine> lectures = [
     Routine(
@@ -116,7 +114,7 @@ Widget routineBlock() {
   return Container(
       padding: EdgeInsets.all(5),
       child: SingleChildScrollView(
-        child: Column(
+          child: Column(
         children: [
           TextButton(
               onPressed: () {},
