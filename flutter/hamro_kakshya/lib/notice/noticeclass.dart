@@ -32,7 +32,7 @@ class NoticeClass {
     //   t = 'AM';
     // }
 
-    this.time = '$hour:$min $t';
+    // this.time = '$hour:$min $t';
     // print(this.time);
   }
 
