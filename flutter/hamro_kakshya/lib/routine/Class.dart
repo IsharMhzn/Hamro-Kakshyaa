@@ -112,7 +112,7 @@ Future<Map<String, List>> fetchNotices(
   http.Client client,
 ) async {
   final response =
-      await client.get(Uri.parse('http://192.168.254.9:8000/classRoutine/'));
+      await client.get(Uri.parse('http://192.168.254.10:8000/classRoutine/'));
 
   if (response.statusCode == 200) {
     return reaarangeclass(parseNotices(response.body));
@@ -131,9 +131,9 @@ List<RoutineClass> parseNotices(String responseBody) {
 }
 
 Future<RoutineClass> createRoutne(RoutineClass routine) async {
-  var url = 'http://192.168.254.9:8000';
+
   final response = await http.post(
-      Uri.parse('http://192.168.254.9:8000/classRoutine/create/'),
+      Uri.parse('http://192.168.254.10:8000/classRoutine/create/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8'
       },

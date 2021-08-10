@@ -51,6 +51,46 @@ Widget routineCardGenerator(lecture) {
   );
 }
 
+Widget routineCardGenerator2(lecture) {
+  return Card(
+    color: Color(0xffe1f6f7),
+    child: Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Code: ${lecture.subj}',
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
+              Text('Time: ${lecture.t.hour}:${lecture.t.min}',
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
+            ],
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('${lecture.type} class',
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
+              Text('${lecture.place}',
+                  style: TextStyle(color: Colors.black, fontSize: 16)),
+            ],
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+
+
 Widget routineBlock() {
   List<Routine> lectures = [
     Routine(
@@ -94,7 +134,7 @@ Widget routineBlock() {
           ),
           Column(
               children: lectures
-                  .map((lecture) => routineCardGenerator(lecture))
+                  .map((lecture) => routineCardGenerator2(lecture))
                   .toList())
         ],
       ));
