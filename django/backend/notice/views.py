@@ -8,6 +8,42 @@ from user.views import UseJWTAuthentication
 from rest_framework import generics
 from rest_framework import permissions
 
+def filterNotice(user, size = None):
+    if user.is_student:
+        print('is a student')
+        faculty = user.faculty
+        batch = user.student.batch
+
+        classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
+        print(classcode)
+        objects = Notice.objects.filter(classcode=classcode)
+        # objects = Notice.objects.filter(classcode="CS18")
+    elif user.is_teacher:
+        objects = Notice.objects.filter(author=user)
+
+        classcode = self.request.query_params.get('classcode')
+        if classcode is not None:
+            classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
+            objects = objects.filter(classcode=classcode)
+    
+    objects = objects[::-1]
+
+    if size:
+        objects = objects[:size]
+
+    return objects
+
+
+class LatestNotice(generics.ListAPIView):
+    serializer_class = NoticeSerializer
+    permission_class = [permissions.IsAuthenticated, ]
+    authentication_class = UseJWTAuthentication
+
+    def get_queryset(self):
+        user = self.request.user
+
+        return filterNotice(user, 3)
+
 class NoticeList(generics.ListAPIView):
     serializer_class = NoticeSerializer
     permission_class = [permissions.IsAuthenticated, ]
@@ -18,30 +54,15 @@ class NoticeList(generics.ListAPIView):
 
         user = self.request.user
 
+        objects = filterNotice(user)
         # if user.is_authenticated:
-        #     # user = User.objects.first()
-        if user.is_student:
-            faculty = user.faculty
-            batch = user.student.batch
-
-            classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
-            print(classcode)
-            objects = Notice.objects.filter(classcode=classcode)
-            # objects = Notice.objects.filter(classcode="CS18")
-        elif user.is_teacher:
-            objects = Notice.objects.filter(author=user)
-
-            classcode = self.request.query_params.get('classcode')
-            if classcode is not None:
-                classcode = ClassCode.objects.get(faculty=faculty, batch=batch)
-                objects = objects.filter(classcode=classcode)
-        
-        # subject = self.request.query_params.get('subject')
+        #     # user = User.objects.first()        
+        subject = self.request.query_params.get('subject')
 
         # if subject is not None:
         #     objects = objects.filter(subj_code = subject)
             
-        # return objects[::-1]
+        return objects
         
 
 class NoticeCreate(generics.CreateAPIView):
