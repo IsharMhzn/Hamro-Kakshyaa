@@ -80,6 +80,9 @@ class _RoutineListState extends State<RoutineList> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var date = DateTime.now();
+    var dayToday = (DateFormat('EEEE').format(date));
+    print(dayToday);
     String now = DateFormat("yyyy-MM-dd \n \t hh:mm").format(DateTime.now());
     return Container(
       child: Column(
@@ -145,7 +148,7 @@ class _RoutineListState extends State<RoutineList> {
             ),
             // onPressed: () {
             //   Navigator.push(context,
-            //       MaterialPageRoute(builder: (context) => (UpcomingClass())));
+            //       MaterialPageRoute(builder: (context) => (UpcomingClass(widget.classes['$dayToday']))));
             // },
           ),
         ],
@@ -181,106 +184,6 @@ class _RoutineListState extends State<RoutineList> {
 
 
 
-
-
-// class NoticeList extends StatelessWidget {
-//   final List<NoticeClass> notices;
-
-//   NoticeList({this.notices});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//         itemCount: notices.length,
-//         itemBuilder: (BuildContext context, int index) {
-//           return new Card(
-//             color: Color(0xffe1f6f7),
-//             margin: EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-//             child: InkWell(
-//               onTap: () {
-//                 Navigator.push(
-//                     context,
-//                     MaterialPageRoute(
-//                         builder: (context) => NoticeDetail(
-//                               notices: this.notices,
-//                               index: index,
-//                             )));
-//               },
-//               child: new ListTile(
-//                 leading: new Icon(
-//                   Icons.notifications_active,
-//                   color: const Color(0xFF132C33),
-//                   size: 30.0,
-//                 ),
-//                 title: new Text(notices[index].subjectcode.code),
-//                 subtitle: new Text(notices[index].title),
-//                 // isThreeLine: true,
-//                 trailing: new Icon(
-//                   Icons.arrow_right,
-//                   color: const Color(0xFF132C33),
-//                   size: 30.0,
-//                   semanticLabel: 'Know more about the notice.',
-//                 ),
-//               ),
-//             ),
-//           );
-//         });
-//   }
-// }
-
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         body: Column(
-//       children: [
-//         RoutinePage(),
-//         ElevatedButton(
-//           child: Text('Upcoming Class'),
-//           onPressed: () {
-//             Navigator.push(context,
-//                 MaterialPageRoute(builder: (context) => (UpcomingClass())));
-//           },
-//         )
-//       ],
-//     ));
-//   }
-
-//   Widget _buildPanel() {
-//     return ExpansionPanelList(
-//       expansionCallback: (int index, bool isExpanded) {
-//         setState(() {
-//           _data[index].isExpanded = !isExpanded;
-//         });
-//       },
-//       children: _data.map<ExpansionPanel>((Item item) {
-//         return ExpansionPanel(
-//           headerBuilder: (BuildContext context, bool isExpanded) {
-//             return ListTile(
-//               title: Center(
-//                   child: Text(
-//                 item.headerValue,
-//                 style: TextStyle(
-//                     color: Color(0xff126e82),
-//                     fontWeight: FontWeight.bold,
-//                     fontSize: 20),
-//               )),
-//             );
-//           },
-//           body: Column(
-//             children: [
-//               routineCardGenerator(lectures[0]),
-//               routineCardGenerator(lectures[1]),
-//               routineCardGenerator(lectures[2]),
-//             ],
-//           ),
-//           isExpanded: item.isExpanded,
-//         );
-//       }).toList(),
-//     );
-//   }
-// }
-
 // class UpcomingClass extends StatefulWidget {
 //   @override
 //   _UpcomingClassState createState() => _UpcomingClassState();
@@ -290,6 +193,7 @@ class _RoutineListState extends State<RoutineList> {
 //     time.hour.toDouble() + (time.minute.toDouble() / 60);
 
 // Widget upcomingClasses(classes) {
+
 //   TimeOfDay now = TimeOfDay.now();
 //   double doubleNowVal = Time_to_double(now);
 //   double timeofclass = Time_to_double(classes.classtime);
@@ -319,29 +223,29 @@ class _RoutineListState extends State<RoutineList> {
 //               title: Text("empty"),
 //             )
 //           ],
-//         ));
-//   }
-// }
+// //         ));
+// //   }
+// // }
 
 // class _UpcomingClassState extends State<UpcomingClass> {
-//   List<Class> classes = [
-//     Class(
-//         subject: 'COMP 208',
-//         venue: 'Block 9 204',
-//         classtime: TimeOfDay(hour: 12, minute: 0)),
-//     Class(
-//         subject: 'COMP 205',
-//         venue: 'Block 9 304',
-//         classtime: TimeOfDay(hour: 15, minute: 0)),
-//     Class(
-//         subject: 'COMP 215',
-//         venue: 'Block 9 304',
-//         classtime: TimeOfDay(hour: 9, minute: 0)),
-//     Class(
-//         subject: 'COMP 209',
-//         venue: 'Block 9 304',
-//         classtime: TimeOfDay(hour: 8, minute: 0)),
-//   ];
+//   // List<Class> classes = [
+//   //   Class(
+//   //       subject: 'COMP 208',
+//   //       venue: 'Block 9 204',
+//   //       classtime: TimeOfDay(hour: 12, minute: 0)),
+//   //   Class(
+//   //       subject: 'COMP 205',
+//   //       venue: 'Block 9 304',
+//   //       classtime: TimeOfDay(hour: 15, minute: 0)),
+//   //   Class(
+//   //       subject: 'COMP 215',
+//   //       venue: 'Block 9 304',
+//   //       classtime: TimeOfDay(hour: 9, minute: 0)),
+//   //   Class(
+//   //       subject: 'COMP 209',
+//   //       venue: 'Block 9 304',
+//   //       classtime: TimeOfDay(hour: 8, minute: 0)),
+//   // ];
 
 //   @override
 //   Widget build(BuildContext context) {
